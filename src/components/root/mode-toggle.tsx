@@ -15,16 +15,18 @@ export function ModeToggle() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                    className={
+                        "bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                    }
+                >
                     {theme === "light" ? (
-                        <Sun color={"black"} className="h-[1.2rem] w-[1.2rem] transition-all" />
+                        <Sun className={"h-4 w-4 text-black"} />
                     ) : theme === "dark" ? (
-                        <Moon color={"white"} className="h-[1.2rem] w-[1.2rem] transition-all" />
+                        <Moon color={"white"} className="h-4 w-4 transition-all" />
                     ) : (
-                        <Cpu className="h-[1.2rem] w-[1.2rem] transition-all" />
+                        <Cpu color={"purple"} className="h-4 w-4 transition-all" />
                     )}
-
-                    <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
