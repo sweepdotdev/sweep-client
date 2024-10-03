@@ -7,7 +7,7 @@ export default function AppBar(): ReactElement {
     return (
         <div
             className={
-                "w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
+                "absolute w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
             }
         >
             <div className={"p-4 space-x-4 flex"}>
