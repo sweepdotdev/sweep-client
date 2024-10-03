@@ -1,9 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
-    children: React.ReactNode;
+    children: ReactNode;
     defaultTheme?: Theme;
     storageKey?: string;
 };
@@ -31,12 +31,13 @@ export function ThemeProvider({
     );
 
     useEffect(() => {
-        const root = window.document.documentElement;
+        const root: HTMLElement = window.document.documentElement;
 
         root.classList.remove("light", "dark");
 
         if (theme === "system") {
-            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            const systemTheme: "dark" | "light" = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
                 ? "dark"
                 : "light";
 
@@ -62,8 +63,8 @@ export function ThemeProvider({
     );
 }
 
-export const useTheme = () => {
-    const context = useContext(ThemeProviderContext);
+export const useTheme = (): ThemeProviderState => {
+    const context: ThemeProviderState = useContext(ThemeProviderContext);
 
     if (context === undefined) throw new Error("useTheme must be used within a ThemeProvider");
 
