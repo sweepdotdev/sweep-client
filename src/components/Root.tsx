@@ -9,6 +9,9 @@ export default function Root(): ReactElement {
             <div id={"login"} className={"h-full w-full"}>
                 <Outlet />
             </div>
+            <div id={"register"} className={"h-full w-full"}>
+                <Outlet />
+            </div>
         </div>
     );
 }
