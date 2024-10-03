@@ -6,10 +6,7 @@ export default function Root(): ReactElement {
     return (
         <div className={"h-screen w-screen"}>
             <AppBar />
-            <div id={"login"} className={"h-full w-full"}>
-                <Outlet />
-            </div>
-            <div id={"register"} className={"h-full w-full"}>
+            <div id={"children"} className={"h-full w-full"}>
                 <Outlet />
             </div>
         </div>
