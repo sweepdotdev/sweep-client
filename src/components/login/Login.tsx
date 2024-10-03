@@ -39,7 +39,7 @@ export default function Login(): ReactElement {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                             <FormField
                                 control={form.control}
                                 name={"email"}
@@ -66,17 +66,21 @@ export default function Login(): ReactElement {
                                     </FormItem>
                                 )}
                             />
-                            <Button type={"submit"}>Submit</Button>
+                            <div className={"w-full flex justify-end pt-4"}>
+                                <Button type={"submit"}>Submit</Button>
+                            </div>
                         </form>
                     </Form>
                 </CardContent>
                 <CardFooter>
-                    <p className={"text-xs"}>
-                        Don't have an account?{" "}
-                        <Link to={"/register"} className={"hover:underline text-blue-500"}>
-                            Register
-                        </Link>
-                    </p>
+                    <div className={"w-full flex justify-center items-center"}>
+                        <p className={"text-xs"}>
+                            Don't have an account?{" "}
+                            <Link to={"/register"} className={"hover:underline text-blue-500"}>
+                                Register
+                            </Link>
+                        </p>
+                    </div>
                 </CardFooter>
             </Card>
         </div>
