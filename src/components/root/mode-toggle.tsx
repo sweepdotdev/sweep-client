@@ -25,7 +25,7 @@ export function ModeToggle() {
                     ) : theme === "dark" ? (
                         <Moon color={"white"} className="h-4 w-4 transition-all" />
                     ) : (
-                        <Cpu color={"purple"} className="h-4 w-4 transition-all" />
+                        <Cpu className="h-4 w-4 transition-all text-neutral-500" />
                     )}
                 </Button>
             </DropdownMenuTrigger>
