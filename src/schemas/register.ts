@@ -4,7 +4,7 @@ export const registerSchema = z
     .object({
         firstName: z.string().min(2).max(28),
         lastName: z.string().min(2).max(28),
-        company: z.string().min(2).max(28).optional(),
+        company: z.string().min(2).max(28),
         email: z.string().email(),
         password: z.string().min(12, { message: "Password must be at least 12 characters." }),
         confirm: z.string().min(12, { message: "Password must be at least 12 characters." }),
