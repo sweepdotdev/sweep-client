@@ -74,7 +74,7 @@ export default function Register(): ReactElement {
                                 name={"company"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Company</FormLabel>
+                                        <FormLabel>Company*</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
