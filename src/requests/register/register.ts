@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Axios } from "../lib/axios";
+import { Axios } from "../../lib/axios.ts";
 
 export default async function register(
     firstName: string,
