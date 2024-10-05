@@ -28,7 +28,7 @@ export default function Register(): ReactElement {
         },
     });
 
-    async function onSubmit(values: z.infer<typeof registerSchema>) {
+    async function onSubmit(values: z.infer<typeof registerSchema>): Promise<void> {
         console.log(values);
     }
     return (
@@ -102,7 +102,7 @@ export default function Register(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Password*</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type={"password"} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -115,7 +115,7 @@ export default function Register(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Confirm Password*</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type={"password"} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
