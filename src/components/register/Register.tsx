@@ -8,16 +8,18 @@ import {
     CardTitle,
 } from "../ui/card.tsx";
 import { registerSchema } from "../../schemas/register.ts";
-import { Link } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form.tsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
+import { AxiosResponse } from "axios";
 import useRegisterUser from "../../requests/register/use-register.tsx";
 
 export default function Register(): ReactElement {
+    const navigate: NavigateFunction = useNavigate();
     const registerMutation = useRegisterUser();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
@@ -31,7 +33,8 @@ export default function Register(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof registerSchema>): Promise<void> {
-        const res = await registerMutation.mutateAsync({
+        console.log(values);
+        const res: AxiosResponse = await registerMutation.mutateAsync({
             firstName: values.firstName,
             lastName: values.lastName,
             company: values.company,
@@ -39,7 +42,9 @@ export default function Register(): ReactElement {
             password: values.password,
         });
 
-        console.log(res);
+        if (res.status === 204) {
+            navigate("/");
+        }
     }
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
