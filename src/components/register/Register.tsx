@@ -15,8 +15,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
+import useRegisterUser from "../../requests/register/use-register.tsx";
 
 export default function Register(): ReactElement {
+    const registerMutation = useRegisterUser();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -29,7 +31,15 @@ export default function Register(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof registerSchema>): Promise<void> {
-        console.log(values);
+        const res = await registerMutation.mutateAsync({
+            firstName: values.firstName,
+            lastName: values.lastName,
+            company: values.company,
+            email: values.email,
+            password: values.password,
+        });
+
+        console.log(res);
     }
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
