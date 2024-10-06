@@ -15,8 +15,10 @@ import { loginSchema } from "../../schemas/login.ts";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import useLogin from "../../requests/login/use-login.tsx";
 
 export default function Login(): ReactElement {
+    const loginMutation = useLogin();
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -26,7 +28,12 @@ export default function Login(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
-        console.log(values);
+        const res = await loginMutation.mutateAsync({
+            email: values.email,
+            password: values.password,
+        });
+
+        console.log(res);
     }
     return (
         <div className={"h-full w-full flex justify-center items-center"}>
@@ -60,7 +67,7 @@ export default function Login(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type={"password"} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
