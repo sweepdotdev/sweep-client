@@ -22,7 +22,7 @@ export default function useRegisterUser() {
             email,
             password,
         }: RegisterData): Promise<AxiosResponse> => {
-            return register({
+            return await register({
                 firstName: firstName,
                 lastName: lastName,
                 company: company,
