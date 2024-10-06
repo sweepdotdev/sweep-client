@@ -1,13 +1,14 @@
 import { AxiosResponse } from "axios";
 import { Axios } from "../../lib/axios.ts";
+import { RegisterData } from "./use-register.tsx";
 
-export default async function register(
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    company: string,
-): Promise<AxiosResponse> {
+export default async function register({
+    firstName,
+    lastName,
+    email,
+    password,
+    company,
+}: RegisterData): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
         url: "http://localhost:8000/v1/users",
