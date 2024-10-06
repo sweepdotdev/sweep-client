@@ -3,7 +3,7 @@ import register from "./register.ts";
 import { AxiosResponse } from "axios";
 import { useToast } from "../../hooks/use-toast.ts";
 
-interface RegisterData {
+export interface RegisterData {
     firstName: string;
     lastName: string;
     company: string;
@@ -22,7 +22,13 @@ export default function useRegisterUser() {
             email,
             password,
         }: RegisterData): Promise<AxiosResponse> => {
-            return register(firstName, lastName, company, email, password);
+            return register({
+                firstName: firstName,
+                lastName: lastName,
+                company: company,
+                email: email,
+                password: password,
+            });
         },
         onSuccess: async (): Promise<void> => {
             toast({
