@@ -29,11 +29,11 @@ export default function Register(): ReactElement {
             company: "",
             email: "",
             password: "",
+            confirm: "",
         },
     });
 
     async function onSubmit(values: z.infer<typeof registerSchema>): Promise<void> {
-        console.log(values);
         const res: AxiosResponse = await registerMutation.mutateAsync({
             firstName: values.firstName,
             lastName: values.lastName,
@@ -63,7 +63,10 @@ export default function Register(): ReactElement {
                                 name={"firstName"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>First Name*</FormLabel>
+                                        <FormLabel>
+                                            First Name
+                                            <span className={"text-red-600 p-0 m-0"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -76,7 +79,9 @@ export default function Register(): ReactElement {
                                 name={"lastName"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Last Name*</FormLabel>
+                                        <FormLabel>
+                                            Last Name<span className={"text-red-600"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -89,7 +94,9 @@ export default function Register(): ReactElement {
                                 name={"company"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Company*</FormLabel>
+                                        <FormLabel>
+                                            Company<span className={"text-red-600"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -102,7 +109,9 @@ export default function Register(): ReactElement {
                                 name={"email"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email*</FormLabel>
+                                        <FormLabel>
+                                            Email<span className={"text-red-600"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -115,7 +124,9 @@ export default function Register(): ReactElement {
                                 name={"password"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Password*</FormLabel>
+                                        <FormLabel>
+                                            Password<span className={"text-red-600"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input type={"password"} {...field} />
                                         </FormControl>
@@ -128,7 +139,10 @@ export default function Register(): ReactElement {
                                 name={"confirm"}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Confirm Password*</FormLabel>
+                                        <FormLabel>
+                                            Confirm Password
+                                            <span className={"text-red-600"}>*</span>
+                                        </FormLabel>
                                         <FormControl>
                                             <Input type={"password"} {...field} />
                                         </FormControl>
@@ -137,7 +151,7 @@ export default function Register(): ReactElement {
                                 )}
                             />
                             <div className={"w-full flex justify-end items-center pt-4"}>
-                                <Button>Submit</Button>
+                                <Button type={"submit"}>Submit</Button>
                             </div>
                         </form>
                     </Form>
