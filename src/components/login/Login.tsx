@@ -28,12 +28,10 @@ export default function Login(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
-        const res = await loginMutation.mutateAsync({
+        await loginMutation.mutateAsync({
             email: values.email,
             password: values.password,
         });
-
-        console.log(res);
     }
     return (
         <div className={"h-full w-full flex justify-center items-center"}>
