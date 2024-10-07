@@ -9,6 +9,7 @@ export default async function login({ email, password }: LoginData): Promise<Axi
         headers: {
             "Content-Type": "application/json",
         },
+        withCredentials: true,
         data: JSON.stringify({ email: email, password: password }),
     });
 }
