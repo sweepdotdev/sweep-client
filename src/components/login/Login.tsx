@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "../ui/card.tsx";
-import { Link } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,14 +15,15 @@ import { loginSchema } from "../../schemas/login.ts";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
 import useLogin from "../../requests/login/use-login.tsx";
 import Cookies from "js-cookie";
 import verifyJWT from "../../lib/security.ts";
-import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
 
 export default function Login(): ReactElement {
     const loginMutation = useLogin();
     const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
+    const redirect: NavigateFunction = useNavigate();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -51,6 +52,8 @@ export default function Login(): ReactElement {
             iss: payload.iss as string,
             sub: payload.sub as string,
         });
+
+        redirect("/");
     }
     return (
         <div className={"h-full w-full flex justify-center items-center"}>
