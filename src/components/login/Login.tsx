@@ -18,9 +18,12 @@ import { Input } from "../ui/input";
 import useLogin from "../../requests/login/use-login.tsx";
 import Cookies from "js-cookie";
 import verifyJWT from "../../lib/security.ts";
+import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
 
 export default function Login(): ReactElement {
     const loginMutation = useLogin();
+    const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
+
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -37,13 +40,21 @@ export default function Login(): ReactElement {
 
         const rawSessionToken: string = Cookies.get("id_token") || "";
 
-        const { payload, protectedHeader } = await verifyJWT(rawSessionToken);
+        const { payload } = await verifyJWT(rawSessionToken);
 
-        console.log(payload, protectedHeader);
+        setState({
+            firstName: payload.first_name as string,
+            lastName: payload.last_name as string,
+            email: payload.email as string,
+            expires: new Date(payload.expiry as string),
+            organization: payload.organization as string,
+            iss: payload.iss as string,
+            sub: payload.sub as string,
+        });
     }
     return (
         <div className={"h-full w-full flex justify-center items-center"}>
-            <Card>
+            <Card className={"shadow-2xl"}>
                 <CardHeader>
                     <CardTitle>Login</CardTitle>
                     <CardDescription>
