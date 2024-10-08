@@ -16,6 +16,8 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import useLogin from "../../requests/login/use-login.tsx";
+import Cookies from "js-cookie";
+import verifyJWT from "../../lib/security.ts";
 
 export default function Login(): ReactElement {
     const loginMutation = useLogin();
@@ -27,11 +29,17 @@ export default function Login(): ReactElement {
         },
     });
 
-    async function onSubmit(values: z.infer<typeof loginSchema>) {
+    async function onSubmit(values: z.infer<typeof loginSchema>): Promise<void> {
         await loginMutation.mutateAsync({
             email: values.email,
             password: values.password,
         });
+
+        const rawSessionToken: string = Cookies.get("id_token") || "";
+
+        const { payload, protectedHeader } = await verifyJWT(rawSessionToken);
+
+        console.log(payload, protectedHeader);
     }
     return (
         <div className={"h-full w-full flex justify-center items-center"}>
