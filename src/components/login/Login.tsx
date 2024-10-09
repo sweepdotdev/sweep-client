@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -22,8 +22,15 @@ import verifyJWT from "../../lib/security.ts";
 
 export default function Login(): ReactElement {
     const loginMutation = useLogin();
+    const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
     const redirect: NavigateFunction = useNavigate();
+
+    useEffect(() => {
+        if (loggedIn) {
+            redirect("/");
+        }
+    }, [loggedIn]);
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -44,6 +51,7 @@ export default function Login(): ReactElement {
         const { payload } = await verifyJWT(rawSessionToken);
 
         setState({
+            loggedIn: true,
             firstName: payload.first_name as string,
             lastName: payload.last_name as string,
             email: payload.email as string,
