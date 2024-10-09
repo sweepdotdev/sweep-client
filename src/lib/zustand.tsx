@@ -3,6 +3,7 @@ import { createStore, StoreApi, useStore } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface SessionState {
+    loggedIn: boolean;
     expires: Date | null;
     firstName: string;
     lastName: string;
@@ -29,6 +30,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         storeRef.current = createStore<SessionState & SessionActions>()(
             persist(
                 (set, get) => ({
+                    loggedIn: false,
                     expires: null,
                     firstName: "",
                     lastName: "",
@@ -41,6 +43,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     setExpiry: (value: Date) => set(() => ({ expires: value })),
                     clearState: () =>
                         set(() => ({
+                            loggedIn: false,
                             expires: null,
                             firstName: "",
                             lastName: "",
