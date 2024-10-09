@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -17,10 +17,19 @@ import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
 import { AxiosResponse } from "axios";
 import useRegisterUser from "../../requests/register/use-register.tsx";
+import { useStoreInContext } from "../../lib/zustand.tsx";
 
 export default function Register(): ReactElement {
     const navigate: NavigateFunction = useNavigate();
+    const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const registerMutation = useRegisterUser();
+
+    useEffect(() => {
+        if (loggedIn) {
+            navigate("/");
+        }
+    }, [loggedIn]);
+
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
