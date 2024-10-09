@@ -26,7 +26,7 @@ export default function Register(): ReactElement {
         defaultValues: {
             firstName: "",
             lastName: "",
-            company: "",
+            organizationName: "",
             email: "",
             password: "",
             confirm: "",
@@ -37,7 +37,7 @@ export default function Register(): ReactElement {
         const res: AxiosResponse = await registerMutation.mutateAsync({
             firstName: values.firstName,
             lastName: values.lastName,
-            company: values.company,
+            organizationName: values.organizationName,
             email: values.email,
             password: values.password,
         });
@@ -91,11 +91,12 @@ export default function Register(): ReactElement {
                             />
                             <FormField
                                 control={form.control}
-                                name={"company"}
+                                name={"organizationName"}
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
-                                            Company<span className={"text-red-600"}>*</span>
+                                            Organization Name
+                                            <span className={"text-red-600"}>*</span>
                                         </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
