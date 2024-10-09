@@ -7,7 +7,7 @@ export default async function register({
     lastName,
     email,
     password,
-    company,
+    organizationName,
 }: RegisterData): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
@@ -20,7 +20,7 @@ export default async function register({
             password: password,
             first_name: firstName,
             last_name: lastName,
-            company: company,
+            organization_name: organizationName,
             gitlab_details: {
                 gitlab_name: "",
                 gitlab_email: "",
