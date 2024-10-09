@@ -2,8 +2,10 @@ import { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
+import { useStoreInContext } from "../../lib/zustand.tsx";
 
 export default function AppBar(): ReactElement {
+    const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     return (
         <div
             className={
@@ -19,14 +21,20 @@ export default function AppBar(): ReactElement {
                 >
                     Home <House className={"ml-2 h-4 w-4"} />
                 </Link>
-                <Link
-                    to={"/login"}
-                    className={
-                        "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
-                    }
-                >
-                    Login <LogIn className={"ml-2 h-4 w-4"} />
-                </Link>
+
+                {!loggedIn ? (
+                    <Link
+                        to={"/login"}
+                        className={
+                            "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
+                        }
+                    >
+                        Login <LogIn className={"ml-2 h-4 w-4"} />
+                    </Link>
+                ) : (
+                    <></>
+                )}
+
                 <ModeToggle />
             </div>
         </div>
