@@ -6,7 +6,7 @@ import { useToast } from "../../hooks/use-toast.ts";
 export interface RegisterData {
     firstName: string;
     lastName: string;
-    company: string;
+    organizationName: string;
     email: string;
     password: string;
 }
@@ -18,14 +18,14 @@ export default function useRegisterUser() {
         mutationFn: async ({
             firstName,
             lastName,
-            company,
+            organizationName,
             email,
             password,
         }: RegisterData): Promise<AxiosResponse> => {
             return await register({
                 firstName: firstName,
                 lastName: lastName,
-                company: company,
+                organizationName: organizationName,
                 email: email,
                 password: password,
             });
