@@ -19,6 +19,7 @@ import { SessionActions, SessionState, useStoreInContext } from "../../lib/zusta
 import useLogin from "../../requests/login/use-login.tsx";
 import Cookies from "js-cookie";
 import verifyJWT from "../../lib/security.ts";
+import { AxiosResponse } from "axios";
 
 export default function Login(): ReactElement {
     const loginMutation = useLogin();
@@ -41,25 +42,26 @@ export default function Login(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof loginSchema>): Promise<void> {
-        await loginMutation.mutateAsync({
+        const res: AxiosResponse = await loginMutation.mutateAsync({
             email: values.email,
             password: values.password,
         });
+        if (res.status === 200) {
+            const idToken: string = Cookies.get("id_token") || "";
 
-        const rawSessionToken: string = Cookies.get("id_token") || "";
+            const { payload } = await verifyJWT(idToken);
 
-        const { payload } = await verifyJWT(rawSessionToken);
-
-        setState({
-            loggedIn: true,
-            firstName: payload.first_name as string,
-            lastName: payload.last_name as string,
-            email: payload.email as string,
-            expires: new Date(payload.expiry as string),
-            organization: payload.organization as string,
-            iss: payload.iss as string,
-            sub: payload.sub as string,
-        });
+            setState({
+                loggedIn: true,
+                firstName: payload.first_name as string,
+                lastName: payload.last_name as string,
+                email: payload.email as string,
+                expires: new Date(payload.expiry as string),
+                organization: payload.organization as string,
+                iss: payload.iss as string,
+                sub: payload.sub as string,
+            });
+        }
 
         redirect("/");
     }

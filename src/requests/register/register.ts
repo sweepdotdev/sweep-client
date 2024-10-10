@@ -15,6 +15,7 @@ export default async function register({
         headers: {
             "Content-Type": "application/json",
         },
+        withCredentials: true,
         data: JSON.stringify({
             email: email,
             password: password,
