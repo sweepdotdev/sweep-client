@@ -16,13 +16,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
 import { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 import useRegisterUser from "../../requests/register/use-register.tsx";
-import { useStoreInContext } from "../../lib/zustand.tsx";
+import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
+import verifyJWT from "../../lib/security.ts";
 
 export default function ManagerRegister(): ReactElement {
     const navigate: NavigateFunction = useNavigate();
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const registerMutation = useRegisterUser();
+    const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
 
     useEffect(() => {
         if (loggedIn) {
@@ -52,8 +55,23 @@ export default function ManagerRegister(): ReactElement {
         });
 
         if (res.status === 204) {
-            navigate("/");
+            const idToken: string = Cookies.get("id_token") || "";
+
+            const { payload } = await verifyJWT(idToken);
+
+            setState({
+                loggedIn: true,
+                firstName: payload.first_name as string,
+                lastName: payload.last_name as string,
+                email: payload.email as string,
+                expires: new Date(payload.expiry as string),
+                organization: payload.organization as string,
+                iss: payload.iss as string,
+                sub: payload.sub as string,
+            });
         }
+
+        navigate("/");
     }
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
