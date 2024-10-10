@@ -19,7 +19,7 @@ import { AxiosResponse } from "axios";
 import useRegisterUser from "../../requests/register/use-register.tsx";
 import { useStoreInContext } from "../../lib/zustand.tsx";
 
-export default function Register(): ReactElement {
+export default function ManagerRegister(): ReactElement {
     const navigate: NavigateFunction = useNavigate();
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const registerMutation = useRegisterUser();
