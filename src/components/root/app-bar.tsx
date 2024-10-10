@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
@@ -6,6 +6,16 @@ import { useStoreInContext } from "../../lib/zustand.tsx";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
+    const [authenticated, setAuthenticated] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (loggedIn) {
+            setAuthenticated(true);
+        } else {
+            setAuthenticated(false);
+        }
+    }, [loggedIn]);
+
     return (
         <div
             className={
@@ -22,7 +32,7 @@ export default function AppBar(): ReactElement {
                     Home <House className={"ml-2 h-4 w-4"} />
                 </Link>
 
-                {!loggedIn ? (
+                {!authenticated ? (
                     <Link
                         to={"/login"}
                         className={
