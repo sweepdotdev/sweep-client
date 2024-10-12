@@ -6,9 +6,10 @@ import { useToast } from "../../hooks/use-toast.ts";
 export interface RegisterData {
     firstName: string;
     lastName: string;
-    organizationName: string;
+    organizationName: string | null;
     email: string;
     password: string;
+    inviteCode: string | null;
 }
 
 export default function useRegisterUser() {
@@ -21,13 +22,15 @@ export default function useRegisterUser() {
             organizationName,
             email,
             password,
+            inviteCode,
         }: RegisterData): Promise<AxiosResponse> => {
             return await register({
                 firstName: firstName,
                 lastName: lastName,
-                organizationName: organizationName,
+                organizationName: organizationName ?? null,
                 email: email,
                 password: password,
+                inviteCode: inviteCode ?? null,
             });
         },
         onSuccess: async (): Promise<void> => {
