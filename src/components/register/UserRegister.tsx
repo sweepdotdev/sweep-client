@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "../ui/card.tsx";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerUserSchema } from "../../schemas/register-member.ts";
@@ -48,6 +48,7 @@ export default function UserRegister(): ReactElement {
             confirm: "",
         },
     });
+    const redirect: NavigateFunction = useNavigate();
 
     async function onSubmit(values: z.infer<typeof registerUserSchema>): Promise<void> {
         if (!code) {
@@ -93,6 +94,8 @@ export default function UserRegister(): ReactElement {
                 sub: payload.sub,
             } as StatePayload);
         }
+
+        redirect("/");
     }
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
@@ -161,7 +164,7 @@ export default function UserRegister(): ReactElement {
                                             Password<span className={"text-red-500"}>*</span>
                                         </FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type={"password"} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -177,7 +180,7 @@ export default function UserRegister(): ReactElement {
                                             <span className={"text-red-500"}>*</span>
                                         </FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type={"password"} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
