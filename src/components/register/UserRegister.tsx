@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "../ui/card.tsx";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerUserSchema } from "../../schemas/register-member.ts";
@@ -15,8 +15,29 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form.tsx";
 import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
+import useRegisterUser from "../../requests/register/use-register.tsx";
+import { AxiosResponse } from "axios";
+import { useToast } from "../../hooks/use-toast.ts";
+import Cookies from "js-cookie";
+import verifyJWT from "../../lib/security.ts";
+import { useStoreInContext } from "../../lib/zustand.tsx";
+
+export interface StatePayload {
+    loggedIn: boolean;
+    firstName: string;
+    lastName: string;
+    email: string;
+    expires: Date;
+    organization: string;
+    iss: string;
+    sub: string;
+}
 
 export default function UserRegister(): ReactElement {
+    const registrationMutation = useRegisterUser();
+    const setState = useStoreInContext((state) => state.setState);
+    const { toast } = useToast();
+    const { code } = useParams();
     const form = useForm<z.infer<typeof registerUserSchema>>({
         resolver: zodResolver(registerUserSchema),
         defaultValues: {
@@ -29,7 +50,49 @@ export default function UserRegister(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof registerUserSchema>): Promise<void> {
-        console.log(values);
+        if (!code) {
+            toast({
+                title: "Oops! 😬",
+                description: "Something went wrong!",
+                variant: "destructive",
+            });
+
+            return;
+        }
+        const res: AxiosResponse = await registrationMutation.mutateAsync({
+            firstName: values.firstName,
+            lastName: values.lastName,
+            inviteCode: code,
+            organizationName: null,
+            email: values.email,
+            password: values.password,
+        });
+
+        if (res.status === 204) {
+            const idToken: string | undefined = Cookies.get("id_token");
+
+            if (!idToken) {
+                toast({
+                    title: "Oops!",
+                    description: "Something went wrong!",
+                    variant: "destructive",
+                });
+                return;
+            }
+
+            const { payload } = await verifyJWT(idToken);
+
+            setState({
+                loggedIn: true,
+                firstName: payload.first_name,
+                lastName: payload.last_name,
+                email: payload.email,
+                expires: new Date(payload.expiry as string),
+                organization: payload.organization,
+                iss: payload.iss,
+                sub: payload.sub,
+            } as StatePayload);
+        }
     }
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
