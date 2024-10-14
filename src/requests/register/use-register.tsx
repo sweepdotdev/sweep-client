@@ -27,10 +27,10 @@ export default function useRegisterUser() {
             return await register({
                 firstName: firstName,
                 lastName: lastName,
-                organizationName: organizationName ?? null,
+                organizationName: organizationName,
                 email: email,
                 password: password,
-                inviteCode: inviteCode ?? null,
+                inviteCode: inviteCode,
             });
         },
         onSuccess: async (): Promise<void> => {
