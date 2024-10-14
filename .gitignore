@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 !/.env
 .env
+private_key.pem
+public_key.pem
