@@ -3,6 +3,7 @@ import Login from "../components/login/Login.tsx";
 import Root from "../components/Root.tsx";
 import ManagerRegister from "../components/register/ManagerRegister.tsx";
 import UserRegister from "../components/register/UserRegister.tsx";
+import UserInfo from "../components/user-information/user-info.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
             {
                 path: "/register/user/:code",
                 element: <UserRegister />,
+            },
+            {
+                path: "/user-info",
+                element: <UserInfo />,
             },
         ],
     },
