@@ -50,6 +50,7 @@ export default function ManagerRegister(): ReactElement {
             firstName: values.firstName,
             lastName: values.lastName,
             organizationName: values.organizationName,
+            inviteCode: null,
             email: values.email,
             password: values.password,
         });
