@@ -46,12 +46,11 @@ export default function UserDropdown(): ReactElement {
                 <Button>{getEmail}</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className={"w-[200px]"}>
-                <DropdownMenuLabel>
-                    <Link to={"/user-info"}>User Options</Link>
-                </DropdownMenuLabel>
+                <DropdownMenuLabel>User Options</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    User Information <CircleUser className={"ml-auto h-4 w-4"} />
+                    <Link to={"/user-info"}>User Information</Link>
+                    <CircleUser className={"ml-auto h-4 w-4"} />
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={logoutUser}>
                     Logout <PowerIcon className={"ml-auto h-4 w-4 text-red-500"} />
