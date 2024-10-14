@@ -17,15 +17,25 @@ import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button.tsx";
 import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import useRegisterUser from "../../requests/register/use-register.tsx";
+import useRegisterUser, { RegisterData } from "../../requests/register/use-register.tsx";
 import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
 import verifyJWT from "../../lib/security.ts";
+import { UseMutationResult } from "@tanstack/react-query";
+import { useToast } from "../../hooks/use-toast.ts";
+import { StatePayload } from "./UserRegister.tsx";
 
 export default function ManagerRegister(): ReactElement {
     const navigate: NavigateFunction = useNavigate();
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
-    const registerMutation = useRegisterUser();
-    const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
+    const registerMutation: UseMutationResult<
+        AxiosResponse<any, any>,
+        Error,
+        RegisterData
+    > = useRegisterUser();
+    const setState: (val: SessionState) => void = useStoreInContext(
+        (state: SessionState & SessionActions) => state.setState,
+    );
+    const { toast } = useToast();
 
     useEffect(() => {
         if (loggedIn) {
@@ -56,20 +66,30 @@ export default function ManagerRegister(): ReactElement {
         });
 
         if (res.status === 204) {
-            const idToken: string = Cookies.get("id_token") || "";
+            const idToken: string | undefined = Cookies.get("id_token");
+
+            if (!idToken) {
+                toast({
+                    title: "Oops!",
+                    description: "No ID Token!",
+                    variant: "destructive",
+                });
+
+                return;
+            }
 
             const { payload } = await verifyJWT(idToken);
 
             setState({
                 loggedIn: true,
-                firstName: payload.first_name as string,
-                lastName: payload.last_name as string,
-                email: payload.email as string,
+                firstName: payload.first_name,
+                lastName: payload.last_name,
+                email: payload.email,
                 expires: new Date(payload.expiry as string),
-                organization: payload.organization as string,
-                iss: payload.iss as string,
-                sub: payload.sub as string,
-            });
+                organization: payload.organization,
+                iss: payload.iss,
+                sub: payload.sub,
+            } as StatePayload);
         }
 
         navigate("/");
