@@ -16,15 +16,18 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
-import useLogin from "../../requests/login/use-login.tsx";
+import useLogin, { LoginData } from "../../requests/login/use-login.tsx";
 import Cookies from "js-cookie";
 import verifyJWT from "../../lib/security.ts";
 import { AxiosResponse } from "axios";
+import { UseMutationResult } from "@tanstack/react-query";
 
 export default function Login(): ReactElement {
-    const loginMutation = useLogin();
+    const loginMutation: UseMutationResult<AxiosResponse<any, any>, Error, LoginData> = useLogin();
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
-    const setState = useStoreInContext((state: SessionState & SessionActions) => state.setState);
+    const setState: (val: SessionState) => void = useStoreInContext(
+        (state: SessionState & SessionActions) => state.setState,
+    );
     const redirect: NavigateFunction = useNavigate();
 
     useEffect(() => {
