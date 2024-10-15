@@ -12,9 +12,9 @@ const LoginWithGithubButton = () => {
 
     const queryString = qs.stringify({
         client_id: import.meta.env.VITE_GITHUB_OAUTH_APP_CLIENT_ID,
+        redirect_uri: import.meta.env.VITE_GITHUB_OAUTH_APP_REDIRECT_URI,
         response_type: "code",
         scope: "repo",
-        redirect_uri: import.meta.env.VITE_GITHUB_OAUTH_APP_REDIRECT_URI,
         state: csrfToken
     });
 
