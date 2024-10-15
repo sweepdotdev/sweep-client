@@ -19,7 +19,7 @@ import useRegisterUser from "../../requests/register/use-register.tsx";
 import { AxiosResponse } from "axios";
 import { useToast } from "../../hooks/use-toast.ts";
 import Cookies from "js-cookie";
-import verifyJWT from "../../lib/security.ts";
+import { verifyJWT } from "../../lib/security.ts";
 import { useStoreInContext } from "../../lib/zustand.tsx";
 
 export interface StatePayload {

@@ -3,11 +3,12 @@ import GitHub from "../icons/gith-hub";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import * as qs from 'qs';
+import { generateCSRFToken } from "../../lib/security";
 
 const LoginWithGithubButton = () => {
     // TODO[P0.5]: verify against this
     // TODO[P2]: More research & potentially backend-based CSRF implementation
-    const csrfToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const csrfToken = generateCSRFToken();
 
     const queryString = qs.stringify({
         client_id: import.meta.env.VITE_GITHUB_OAUTH_APP_CLIENT_ID,
