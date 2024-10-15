@@ -51,6 +51,7 @@ export default function Home(): ReactElement {
         <div className={"h-screen w-screen"}>
             <div className={"h-full w-full flex items-center justify-center"}>
                 {/* TODO[P3]: "Welcome back to your org" dashboard */}
+                {/* TODO[P3]: Support for other git providers */}
                 {!hasGithubLink && <GitConnectionPrompt />}
             </div>
         </div>
