@@ -17,7 +17,7 @@ export default function UserInfo(): ReactElement {
     const inviteCodeQuery = useQuery({
         queryKey: ["inviteCode", organization],
         queryFn: async () => {
-            return await getInviteCode({ organizationId: organization });
+            return await getInviteCode();
         },
     });
     const [inviteCode, setInviteCode] = useState<string>("");
