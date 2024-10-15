@@ -6,8 +6,8 @@ export default function useLogout() {
     const { toast } = useToast();
     return useMutation({
         mutationKey: ["logout"],
-        mutationFn: async (accountId: string) => {
-            return await logout({ accountId: accountId });
+        mutationFn: async () => {
+            return await logout();
         },
         onSuccess: async (): Promise<void> => {
             toast({
