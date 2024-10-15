@@ -14,8 +14,6 @@ export default function Root(): ReactElement {
     }
 
     // TODO: If session is expired, clear the contents of the store
-    // TODO: Add a 'loggedIn' property to the store
-    // TODO: If loggedIn, don't allow the user to visit login/register views, redirect them to home on navigation
 
     return (
         <div className={"h-screen w-screen"}>
