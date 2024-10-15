@@ -13,7 +13,7 @@ export default async function saveUserGithubAuthorization(
 ): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
-        url: `http://localhost:8000/v1/users/self/sso/${providerName}`,
+        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/users/self/sso/${providerName}`,
         headers: {
             "Content-Type": "application/json",
         },
