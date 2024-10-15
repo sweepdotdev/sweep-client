@@ -7,6 +7,9 @@ import { generateCSRFToken } from "../../lib/security";
 import { useStoreInContext } from "../../lib/zustand";
 import { ProviderName } from "../../requests/integrations/oauth2/github";
 
+// TODO[P3]: Support for other git providers
+const ACCEPTED_GIT_PROVIDERS = new Set(["github"]);
+
 const LoginWithGithubButton = () => {
     // TODO: store this in local storage & verify against it on callback
     const csrfToken = generateCSRFToken();
@@ -40,19 +43,18 @@ const GitConnectionPrompt = () => {
 
 export default function Home(): ReactElement {
     const loggedIn = useStoreInContext(state => state.loggedIn);
-    let hasGithubLink = false;
+    let hasAssociatedGit = false;
 
     if (loggedIn) {
         const providers: ProviderName[] = []; // TODO: get from API
-        hasGithubLink = providers.includes("github");
+        hasAssociatedGit = providers.some(p => ACCEPTED_GIT_PROVIDERS.has(p));
     }
 
     return (
         <div className={"h-screen w-screen"}>
             <div className={"h-full w-full flex items-center justify-center"}>
                 {/* TODO[P3]: "Welcome back to your org" dashboard */}
-                {/* TODO[P3]: Support for other git providers */}
-                {!hasGithubLink && <GitConnectionPrompt />}
+                {!hasAssociatedGit && <GitConnectionPrompt />}
             </div>
         </div>
     );
