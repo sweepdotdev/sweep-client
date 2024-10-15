@@ -4,10 +4,11 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import * as qs from 'qs';
 import { generateCSRFToken } from "../../lib/security";
+import { useStoreInContext } from "../../lib/zustand";
+import { ProviderName } from "../../requests/integrations/oauth2/github";
 
 const LoginWithGithubButton = () => {
-    // TODO[P0.5]: verify against this
-    // TODO[P2]: More research & potentially backend-based CSRF implementation
+    // TODO: store this in local storage & verify against it on callback
     const csrfToken = generateCSRFToken();
 
     const queryString = qs.stringify({
@@ -28,11 +29,29 @@ const LoginWithGithubButton = () => {
     )
 }
 
+const GitConnectionPrompt = () => {
+    return (
+        <div className="flex flex-col items-center space-y-1">
+            <p className="font-bold">Please connect a Git account to use additional features</p>
+            <LoginWithGithubButton />
+        </div>
+    )
+}
+
 export default function Home(): ReactElement {
+    const loggedIn = useStoreInContext(state => state.loggedIn);
+    let hasGithubLink = false;
+
+    if (loggedIn) {
+        const providers: ProviderName[] = []; // TODO: get from API
+        hasGithubLink = providers.includes("github");
+    }
+
     return (
         <div className={"h-screen w-screen"}>
             <div className={"h-full w-full flex items-center justify-center"}>
-                <LoginWithGithubButton />
+                {/* TODO[P3]: "Welcome back to your org" dashboard */}
+                {!hasGithubLink && <GitConnectionPrompt />}
             </div>
         </div>
     );
