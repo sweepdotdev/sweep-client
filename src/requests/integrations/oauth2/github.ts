@@ -14,9 +14,7 @@ export default async function saveUserGithubAuthorization(
     return Axios({
         method: "POST",
         url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/users/self/sso/${providerName}`,
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         withCredentials: true,
         data: JSON.stringify({ authorization_code: authorizationCode }),
     });
