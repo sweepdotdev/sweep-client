@@ -17,7 +17,7 @@ export default function UserInfo(): ReactElement {
     const inviteCodeQuery = useQuery({
         queryKey: ["inviteCode", organization],
         queryFn: async () => {
-            return await getInviteCode();
+            return await getInviteCode({ organizationId: organization });
         },
     });
     const [inviteCode, setInviteCode] = useState<string>("");
@@ -31,7 +31,11 @@ export default function UserInfo(): ReactElement {
 
     useEffect(() => {
         if (loaded) {
-            setInviteCode(inviteCodeQuery.data?.data.invite_code);
+            if (inviteCodeQuery.data?.data.invite_code) {
+                setInviteCode(inviteCodeQuery.data?.data.invite_code);
+            } else {
+                setInviteCode("");
+            }
         }
     }, [loaded]);
 
