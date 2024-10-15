@@ -8,19 +8,31 @@ import { getInviteCode } from "../../requests/user/get-invite-code.ts";
 import { Button } from "../ui/button.tsx";
 import { Copy } from "lucide-react";
 import { useToast } from "../../hooks/use-toast.ts";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip.tsx";
+
+interface InviteCode {
+    id: string;
+    organization_id: string;
+    invite_code: string;
+    created_at: string;
+}
 
 export default function UserInfo(): ReactElement {
     const { organization, email, lastName, firstName } = useStoreInContext((state) =>
         state.getState(),
     );
     const [loaded, setLoaded] = useState<boolean>(false);
+
     const inviteCodeQuery = useQuery({
         queryKey: ["inviteCode", organization],
         queryFn: async () => {
             return await getInviteCode({ organizationId: organization });
         },
     });
-    const [inviteCode, setInviteCode] = useState<string>("");
+
+    const [inviteCode, setInviteCode] = useState<InviteCode[]>([
+        { id: "", invite_code: "", organization_id: "", created_at: "" },
+    ]);
     const { toast } = useToast();
 
     useEffect(() => {
@@ -31,10 +43,8 @@ export default function UserInfo(): ReactElement {
 
     useEffect(() => {
         if (loaded) {
-            if (inviteCodeQuery.data?.data.invite_code) {
-                setInviteCode(inviteCodeQuery.data?.data.invite_code);
-            } else {
-                setInviteCode("");
+            if (inviteCodeQuery.data?.data) {
+                setInviteCode(inviteCodeQuery.data?.data);
             }
         }
     }, [loaded]);
@@ -42,7 +52,7 @@ export default function UserInfo(): ReactElement {
     async function copyToClipboard() {
         try {
             await navigator.clipboard.writeText(
-                `http://localhost:5173/register/user/${inviteCode}`,
+                `http://localhost:5173/register/user/${inviteCode[0].invite_code}`,
             );
             toast({
                 title: "Copied! 💾",
@@ -81,20 +91,34 @@ export default function UserInfo(): ReactElement {
                         <Label htmlFor={"email"}>Email</Label>
                         <Input id={"email"} value={email} readOnly />
                     </div>
-                    <div>
-                        <Label htmlFor={"inviteCode"}>Invite Code</Label>
-                        <div className={"flex items-center space-x-2"}>
-                            <Input
-                                className={"text-xs"}
-                                id={"inviteCode"}
-                                value={`http://localhost:5173/register/user/${inviteCode}`}
-                                readOnly
-                            />
-                            <Button size={"sm"} onClick={async () => await copyToClipboard()}>
-                                <Copy className={"h-4 w-4"} />
-                            </Button>
+                    {inviteCode.length === 0 || !inviteCode[0].invite_code ? (
+                        <></>
+                    ) : (
+                        <div>
+                            <Label htmlFor={"inviteCode"}>Invite Code</Label>
+                            <div className={"flex items-center space-x-2"}>
+                                <Input
+                                    className={"text-xs"}
+                                    id={"inviteCode"}
+                                    value={`http://localhost:5173/register/user/${inviteCode[0].invite_code}`}
+                                    readOnly
+                                />
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button
+                                            size={"sm"}
+                                            onClick={async () => await copyToClipboard()}
+                                        >
+                                            <Copy className={"h-4 w-4"} />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <span>Copy to Clipboard</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </CardContent>
             </Card>
         </div>
