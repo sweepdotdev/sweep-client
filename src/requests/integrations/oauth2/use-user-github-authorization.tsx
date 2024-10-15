@@ -1,18 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "../../../hooks/use-toast.ts";
-import saveUserGithubAuthorization, { GithubAuthorizationData } from "./github.ts";
+import saveUserGithubAuthorization from "./github.ts";
 
 export default function useUserGithubAuthorization() {
     const { toast } = useToast();
     return useMutation({
         mutationKey: ["saveUserGithubAuthorization"],
-        mutationFn: async ({ authorizationCode, providerName }: GithubAuthorizationData) => {
-            return await saveUserGithubAuthorization({ authorizationCode, providerName });
-        },
+        mutationFn: saveUserGithubAuthorization,
         onSuccess: async () => {
             toast({
                 title: "Success! 🎉",
-                description: "You have successfully logged out of your account!",
+                description: "Successfully connected your Github account!",
                 className: "bg-green-500",
             });
         },

@@ -1,41 +1,34 @@
-import { ReactElement, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useUserGithubAuthorization from "../../requests/integrations/oauth2/use-user-github-authorization";
+import { useToast } from "../../hooks/use-toast";
 
-interface Result {
-    success: boolean;
-    message: string;
-}
-
-export default function GithubCallbackPage(): ReactElement {
+export default function GithubCallbackPage() {
+    const { toast } = useToast();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const githubAuthorizationMutation = useUserGithubAuthorization();
-    const [result, setResult] = useState<Result>();
 
-    const code = searchParams.get("code");
     useEffect(() => {
         ;(async () => {
             try {
-                if (code) {
-                    await githubAuthorizationMutation.mutateAsync({
-                        providerName: "github",
-                        authorizationCode: code,
-                    });
-                    setResult({ success: true, message: "Success!" });
+                const code = searchParams.get("code");
+                if (!code) {
+                    throw new Error("No code provided");
                 }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (error: any) {
-                setResult({ success: false, message: error.message });
+                await githubAuthorizationMutation.mutateAsync({
+                    providerName: "github",
+                    authorizationCode: code,
+                });
+                navigate("/")
+            } catch {
+                toast({
+                    title: "Oops!",
+                    description: "Failed to connect github account",
+                    variant: "destructive",
+                });
+                navigate("/")
             }
         })();
-    }, [code]);
-
-    return (
-        <div>
-            {result
-                ? <p className={result.success ? "text-green-500" : "text-red-500"}>{result.message}</p>
-                : <p>Loading</p>
-            }
-        </div>
-    )
+    }, [searchParams]);
 }
