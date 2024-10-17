@@ -18,7 +18,7 @@ import { Input } from "../ui/input";
 import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
 import useLogin, { LoginData } from "../../requests/login/use-login.tsx";
 import Cookies from "js-cookie";
-import verifyJWT from "../../lib/security.ts";
+import { verifyJWT } from "../../lib/security.ts";
 import { AxiosResponse } from "axios";
 import { UseMutationResult } from "@tanstack/react-query";
 

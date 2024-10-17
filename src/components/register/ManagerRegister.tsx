@@ -19,7 +19,7 @@ import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import useRegisterUser, { RegisterData } from "../../requests/register/use-register.tsx";
 import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
-import verifyJWT from "../../lib/security.ts";
+import { verifyJWT } from "../../lib/security.ts";
 import { UseMutationResult } from "@tanstack/react-query";
 import { useToast } from "../../hooks/use-toast.ts";
 import { StatePayload } from "./UserRegister.tsx";

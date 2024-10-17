@@ -12,7 +12,7 @@ export default async function register({
 }: RegisterData): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
-        url: "http://localhost:8000/v1/users",
+        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/users`,
         headers: {
             "Content-Type": "application/json",
         },
