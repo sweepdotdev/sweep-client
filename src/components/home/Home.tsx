@@ -1,19 +1,27 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useStoreInContext } from "../../lib/zustand";
 import { ProviderName } from "../../requests/integrations/oauth2/github";
 import { GitConnectionPrompt } from "./GitConnectionPrompt";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const ACCEPTED_GIT_PROVIDERS = new Set(["github"]);
 
 export default function Home(): ReactElement {
-    const loggedIn = useStoreInContext((state) => state.loggedIn);
+    const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const [hasAssociatedGit, setHasAssociatedGit] = useState<boolean>(false);
+    const redirect: NavigateFunction = useNavigate();
+    const providers: ProviderName[] = []; // TODO: get from API
 
-    if (loggedIn) {
-        const providers: ProviderName[] = []; // TODO: get from API
-        const exists = providers.some((p) => ACCEPTED_GIT_PROVIDERS.has(p));
+    useEffect(() => {
+        if (!loggedIn) {
+            redirect("/login");
+        }
+    }, []);
+
+    useEffect(() => {
+        const exists: boolean = providers.some((p) => ACCEPTED_GIT_PROVIDERS.has(p));
         setHasAssociatedGit(exists);
-    }
+    }, [providers, loggedIn]);
 
     return (
         <div className={"h-screen w-screen"}>
