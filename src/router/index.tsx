@@ -7,6 +7,7 @@ import UserInfo from "../components/user-information/user-info.tsx";
 import Home from "../components/home/Home.tsx";
 import GithubCallbackPage from "../components/callbacks/GithubCallbackPage.tsx";
 import ChangeRequests from "../components/change-requests/ChangeRequests.tsx";
+import CreateChangeRequests from "../components/change-requests/CreateChangeRequests.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             {
                 path: "/change-requests",
                 element: <ChangeRequests />,
+            },
+            {
+                path: "/change-requests/create",
+                element: <CreateChangeRequests />,
             },
         ],
     },
