@@ -33,7 +33,6 @@ export default function UserInfo(): ReactElement {
     const [orgInvitations, setInviteCode] = useState<InviteCode[]>([
         { id: "", invite_code: "", organization_id: "", created_at: "" },
     ]);
-    const inviteCode = orgInvitations[0]?.invite_code;
 
     const { toast } = useToast();
 
@@ -54,7 +53,7 @@ export default function UserInfo(): ReactElement {
     async function copyToClipboard() {
         try {
             await navigator.clipboard.writeText(
-                `${import.meta.env.VITE_APP_BASE_URL}/register/user/${inviteCode}`,
+                `${import.meta.env.VITE_APP_BASE_URL}/register/user/${orgInvitations[0].invite_code}`,
             );
             toast({
                 title: "Copied! 💾",
@@ -69,10 +68,6 @@ export default function UserInfo(): ReactElement {
                 variant: "destructive",
             });
         }
-    }
-
-    if (!inviteCode) {
-        return <></>;
     }
 
     return (
@@ -97,27 +92,31 @@ export default function UserInfo(): ReactElement {
                         <Label htmlFor={"email"}>Email</Label>
                         <Input id={"email"} value={email} readOnly />
                     </div>
-                    <div>
-                        <Label htmlFor={"inviteCode"}>Invite Code</Label>
-                        <div className={"flex items-center space-x-2"}>
-                            <Input
-                                className={"text-xs"}
-                                id={"inviteCode"}
-                                value={`${import.meta.env.VITE_APP_BASE_URL}/register/user/${inviteCode}`}
-                                readOnly
-                            />
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button size={"sm"} onClick={copyToClipboard}>
-                                        <Copy className={"h-4 w-4"} />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <span>Copy to Clipboard</span>
-                                </TooltipContent>
-                            </Tooltip>
+                    {orgInvitations[0].invite_code ? (
+                        <div>
+                            <Label htmlFor={"inviteCode"}>Invite Code</Label>
+                            <div className={"flex items-center space-x-2"}>
+                                <Input
+                                    className={"text-xs"}
+                                    id={"inviteCode"}
+                                    value={`${import.meta.env.VITE_APP_BASE_URL}/register/user/${orgInvitations[0].invite_code}`}
+                                    readOnly
+                                />
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button size={"sm"} onClick={copyToClipboard}>
+                                            <Copy className={"h-4 w-4"} />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <span>Copy to Clipboard</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <></>
+                    )}
                 </CardContent>
             </Card>
         </div>
