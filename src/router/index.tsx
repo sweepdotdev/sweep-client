@@ -6,7 +6,7 @@ import UserRegister from "../components/register/UserRegister.tsx";
 import UserInfo from "../components/user-information/user-info.tsx";
 import Home from "../components/home/Home.tsx";
 import GithubCallbackPage from "../components/callbacks/GithubCallbackPage.tsx";
-import ChangeLogs from "../components/change-log/ChangeLogs.tsx";
+import ChangeRequests from "../components/change-requests/ChangeRequests.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -38,8 +38,8 @@ export const router = createBrowserRouter([
                 element: <UserInfo />,
             },
             {
-                path: "/change-logs",
-                element: <ChangeLogs />,
+                path: "/change-requests",
+                element: <ChangeRequests />,
             },
         ],
     },
