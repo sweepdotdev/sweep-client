@@ -36,7 +36,9 @@ export default function ChangeRequests(): ReactElement {
                 ) : (
                     <div className={"flex flex-col justify-center items-center space-y-2"}>
                         <p>There are currently no change requests in your organization. </p>
-                        <Button size={"lg"}>Create Change Request</Button>
+                        <Button onClick={() => redirect("/change-requests/create")} size={"lg"}>
+                            Create Change Request
+                        </Button>
                     </div>
                 )}
             </div>
