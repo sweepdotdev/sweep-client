@@ -4,7 +4,7 @@ import { Axios } from "../../lib/axios.ts";
 export async function logout(): Promise<AxiosResponse> {
     return Axios({
         method: "DELETE",
-        url: "http://localhost:8000/v1/users/self/logout",
+        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/users/self/logout`,
         headers: {
             "Content-Type": "application/json",
         },

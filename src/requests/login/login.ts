@@ -5,7 +5,7 @@ import { LoginData } from "./use-login.tsx";
 export default async function login({ email, password }: LoginData): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
-        url: "http://localhost:8000/v1/users/self/authenticate",
+        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/users/self/authenticate`,
         headers: {
             "Content-Type": "application/json",
         },
