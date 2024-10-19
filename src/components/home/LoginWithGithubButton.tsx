@@ -23,9 +23,9 @@ export const LoginWithGithubButton = ({
 
     return (
         <Link to={`https://github.com/login/oauth/authorize?${queryString}`}>
-            <Button className={"bg-black dark:bg-white text-xl space-x-2"}>
+            <Button size={"lg"} className={"bg-black dark:bg-white"}>
                 <div className="mr-2">
-                    <GitHub height={4} width={4} />
+                    <GitHub height={"24px"} width={"24px"} />
                 </div>
                 Login with GitHub
             </Button>
