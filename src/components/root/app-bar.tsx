@@ -4,6 +4,8 @@ import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
 import { useStoreInContext } from "../../lib/zustand.tsx";
 import UserDropdown from "./user-dropdown.tsx";
+import NavMenu from "./nav-menu.tsx";
+import { Button } from "../ui/button.tsx";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -26,13 +28,14 @@ export default function AppBar(): ReactElement {
         >
             <div className={"p-4 space-x-4 flex items-center"}>
                 {authenticated && pathname !== "/" ? (
-                    <Link
-                        to={"/"}
-                        className={
-                            "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
-                        }
-                    >
-                        Home <House className={"ml-2 h-4 w-4"} />
+                    <Link to={"/"} className={"text-black dark:text-white flex items-center"}>
+                        <Button
+                            className={
+                                "dark:text-white text-black bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                            }
+                        >
+                            Home <House className={"ml-2 h-4 w-4"} />
+                        </Button>
                     </Link>
                 ) : (
                     <></>
@@ -40,14 +43,20 @@ export default function AppBar(): ReactElement {
 
                 {authenticated ? <UserDropdown /> : <></>}
 
+                {authenticated ? <NavMenu /> : <></>}
+
                 {!authenticated && pathname !== "/login" ? (
                     <Link
                         to={"/login"}
-                        className={
-                            "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
-                        }
+                        className={"hover:underline text-black dark:text-white flex items-center"}
                     >
-                        Login <LogIn className={"ml-2 h-4 w-4"} />
+                        <Button
+                            className={
+                                "bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                            }
+                        >
+                            Login <LogIn className={"ml-2 h-4 w-4"} />
+                        </Button>
                     </Link>
                 ) : (
                     <></>
