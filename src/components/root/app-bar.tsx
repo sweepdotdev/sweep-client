@@ -4,8 +4,8 @@ import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
 import { useStoreInContext } from "../../lib/zustand.tsx";
 import UserDropdown from "./user-dropdown.tsx";
-import NavMenu from "./nav-menu.tsx";
 import { Button } from "../ui/button.tsx";
+import { SidebarTrigger } from "../ui/sidebar.tsx";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -26,6 +26,7 @@ export default function AppBar(): ReactElement {
                 "absolute w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
             }
         >
+            <div>{authenticated ? <SidebarTrigger /> : <></>}</div>
             <div className={"p-4 space-x-4 flex items-center"}>
                 {authenticated && pathname !== "/" ? (
                     <Link to={"/"} className={"text-black dark:text-white flex items-center"}>
@@ -42,8 +43,6 @@ export default function AppBar(): ReactElement {
                 )}
 
                 {authenticated ? <UserDropdown /> : <></>}
-
-                {authenticated ? <NavMenu /> : <></>}
 
                 {!authenticated && pathname !== "/login" ? (
                     <Link
