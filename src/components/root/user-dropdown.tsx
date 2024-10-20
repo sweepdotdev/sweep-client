@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu.tsx";
 import { Button } from "../ui/button.tsx";
-import { PowerIcon, CircleUser } from "lucide-react";
+import { PowerIcon, CircleUser, ChevronDown } from "lucide-react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import useLogout from "../../requests/logout/use-logout.tsx";
 
@@ -30,7 +30,13 @@ export default function UserDropdown(): ReactElement {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button>{getEmail}</Button>
+                <Button
+                    className={
+                        "text-black dark:text-white bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                    }
+                >
+                    {getEmail} <ChevronDown className={"h-3 w-3 ml-2"} />
+                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className={"w-[200px]"}>
                 <DropdownMenuLabel>User Options</DropdownMenuLabel>
