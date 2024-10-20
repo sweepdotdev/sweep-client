@@ -7,8 +7,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "./components/ui/toaster.tsx";
 import { StoreProvider } from "./lib/zustand.tsx";
-import "./index.css";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
+import "./index.css";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
@@ -17,8 +17,10 @@ createRoot(document.getElementById("root")!).render(
             <ThemeProvider defaultTheme={"light"} storageKey={"sweep-ui-theme"}>
                 <StoreProvider>
                     <TooltipProvider>
-                        <RouterProvider router={router} />
-                        <Toaster />
+                        <main>
+                            <RouterProvider router={router} />
+                            <Toaster />
+                        </main>
                     </TooltipProvider>
                 </StoreProvider>
             </ThemeProvider>
