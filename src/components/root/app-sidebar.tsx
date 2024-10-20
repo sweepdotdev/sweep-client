@@ -1,5 +1,6 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "../ui/sidebar";
 import { ReactElement } from "react";
+import UserDropdown from "./user-dropdown.tsx";
 
 export function AppSidebar(): ReactElement {
     return (
@@ -9,7 +10,9 @@ export function AppSidebar(): ReactElement {
                 <SidebarGroup />
                 <SidebarGroup />
             </SidebarContent>
-            <SidebarFooter />
+            <SidebarFooter>
+                <UserDropdown />
+            </SidebarFooter>
         </Sidebar>
     );
 }
