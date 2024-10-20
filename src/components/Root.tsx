@@ -3,6 +3,8 @@ import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
 import { useStoreInContext } from "../lib/zustand.tsx";
 import { isAfter } from "date-fns";
 import AppBar from "./root/app-bar.tsx";
+import { AppSidebar } from "./root/app-sidebar.tsx";
+import { SidebarProvider } from "./ui/sidebar.tsx";
 
 export default function Root(): ReactElement {
     const sessionExpiry: Date | null = useStoreInContext((state) => state.expires);
@@ -16,11 +18,12 @@ export default function Root(): ReactElement {
     // TODO: If session is expired, clear the contents of the store
 
     return (
-        <div className={"h-screen w-screen"}>
+        <SidebarProvider defaultOpen={false}>
             <AppBar />
-            <div id={"children"} className={"h-full w-full"}>
+            <AppSidebar />
+            <div id={"children"} className={"h-screen w-screen"}>
                 <Outlet />
             </div>
-        </div>
+        </SidebarProvider>
     );
 }
