@@ -3,7 +3,6 @@ import { Link, Location, useLocation } from "react-router-dom";
 import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
 import { useStoreInContext } from "../../lib/zustand.tsx";
-import UserDropdown from "./user-dropdown.tsx";
 import { Button } from "../ui/button.tsx";
 import { SidebarTrigger } from "../ui/sidebar.tsx";
 
@@ -41,8 +40,6 @@ export default function AppBar(): ReactElement {
                 ) : (
                     <></>
                 )}
-
-                {authenticated ? <UserDropdown /> : <></>}
 
                 {!authenticated && pathname !== "/login" ? (
                     <Link
