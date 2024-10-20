@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Location, useLocation } from "react-router-dom";
 import { House, LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle.tsx";
 import { useStoreInContext } from "../../lib/zustand.tsx";
@@ -8,6 +8,7 @@ import UserDropdown from "./user-dropdown.tsx";
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const [authenticated, setAuthenticated] = useState<boolean>(false);
+    const { pathname }: Location = useLocation();
 
     useEffect(() => {
         if (loggedIn) {
@@ -24,18 +25,22 @@ export default function AppBar(): ReactElement {
             }
         >
             <div className={"p-4 space-x-4 flex items-center"}>
-                <Link
-                    to={"/"}
-                    className={
-                        "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
-                    }
-                >
-                    Home <House className={"ml-2 h-4 w-4"} />
-                </Link>
+                {authenticated && pathname !== "/" ? (
+                    <Link
+                        to={"/"}
+                        className={
+                            "hover:underline text-black dark:text-white hover:dark:text-red-500 hover:text-red-500 flex items-center"
+                        }
+                    >
+                        Home <House className={"ml-2 h-4 w-4"} />
+                    </Link>
+                ) : (
+                    <></>
+                )}
 
                 {authenticated ? <UserDropdown /> : <></>}
 
-                {!authenticated ? (
+                {!authenticated && pathname !== "/login" ? (
                     <Link
                         to={"/login"}
                         className={
