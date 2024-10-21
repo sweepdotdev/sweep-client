@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
-import { Axios } from "../../lib/axios.ts";
-import { RegisterData } from "./use-register.tsx";
+import { Axios } from "@/lib/axios.ts";
+import { RegisterData } from "@/requests/register/use-register.tsx";
 
 export default async function register({
     firstName,
