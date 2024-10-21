@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
-import { Axios } from "../../lib/axios.ts";
-import { LoginData } from "./use-login.tsx";
+import { Axios } from "@/lib/axios.ts";
+import { LoginData } from "@/requests/login/use-login.tsx";
 
 export default async function login({ email, password }: LoginData): Promise<AxiosResponse> {
     return Axios({
