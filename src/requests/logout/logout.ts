@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Axios } from "../../lib/axios.ts";
+import { Axios } from "@/lib/axios.ts";
 
 export async function logout(): Promise<AxiosResponse> {
     return Axios({
