@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "../../hooks/use-toast.ts";
-import login from "./login.ts";
+import { useToast } from "@/hooks/use-toast.ts";
 import { AxiosResponse } from "axios";
+import login from "@/requests/login/login.ts";
 
 export interface LoginData {
     email: string;
