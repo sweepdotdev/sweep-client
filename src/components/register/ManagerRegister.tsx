@@ -1,4 +1,3 @@
-import { ReactElement, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -6,23 +5,33 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "../ui/card.tsx";
-import { registerSchema } from "../../schemas/register.ts";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form.tsx";
-import { useForm } from "react-hook-form";
+} from "@/components/ui/card.tsx";
+
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form.tsx";
+
 import { z } from "zod";
+import { ReactElement, useEffect } from "react";
+import { registerSchema } from "@/schemas/register.ts";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input.tsx";
-import { Button } from "../ui/button.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { AxiosResponse } from "axios";
-import Cookies from "js-cookie";
-import useRegisterUser, { RegisterData } from "../../requests/register/use-register.tsx";
-import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
-import { verifyJWT } from "../../lib/security.ts";
+import { SessionActions, SessionState, useStoreInContext } from "@/lib/zustand.tsx";
+import { verifyJWT } from "@/lib/security.ts";
 import { UseMutationResult } from "@tanstack/react-query";
-import { useToast } from "../../hooks/use-toast.ts";
+import { useToast } from "@/hooks/use-toast.ts";
 import { StatePayload } from "./UserRegister.tsx";
+import useRegisterUser, { RegisterData } from "@/requests/register/use-register.tsx";
+import Cookies from "js-cookie";
 
 export default function ManagerRegister(): ReactElement {
     const navigate: NavigateFunction = useNavigate();
