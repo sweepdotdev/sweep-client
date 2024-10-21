@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { logout } from "./logout.ts";
-import { useToast } from "../../hooks/use-toast.ts";
+import { logout } from "@/requests/logout/logout.ts";
+import { useToast } from "@/hooks/use-toast.ts";
 
 export default function useLogout() {
     const { toast } = useToast();
