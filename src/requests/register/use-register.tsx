@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import register from "./register.ts";
 import { AxiosResponse } from "axios";
-import { useToast } from "../../hooks/use-toast.ts";
+import { useToast } from "@/hooks/use-toast.ts";
+import register from "@/requests/register/register.ts";
 
 export interface RegisterData {
     firstName: string;
