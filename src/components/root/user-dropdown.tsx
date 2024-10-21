@@ -23,10 +23,8 @@ export default function UserDropdown(): ReactElement {
     async function logoutUser() {
         await logoutMutation.mutateAsync();
 
-        if (logoutMutation.isSuccess) {
-            clearState();
-            redirect("/login");
-        }
+        clearState();
+        redirect("/login");
     }
 
     return (
