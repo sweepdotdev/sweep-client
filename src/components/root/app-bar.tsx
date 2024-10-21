@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
 import { Link, Location, useLocation } from "react-router-dom";
 import { House, LogIn } from "lucide-react";
-import { ModeToggle } from "./mode-toggle.tsx";
-import { useStoreInContext } from "../../lib/zustand.tsx";
-import { Button } from "../ui/button.tsx";
-import { SidebarTrigger } from "../ui/sidebar.tsx";
+import { ModeToggle } from "@/components/root/mode-toggle.tsx";
+import { useStoreInContext } from "@/lib/zustand.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { SidebarTrigger } from "@/components/ui/sidebar.tsx";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
