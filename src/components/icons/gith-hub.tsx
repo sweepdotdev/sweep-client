@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { useTheme } from "../theme-provider.tsx";
+import { useTheme } from "@/components/theme-provider.tsx";
 
 interface IconProps {
     height: string;
