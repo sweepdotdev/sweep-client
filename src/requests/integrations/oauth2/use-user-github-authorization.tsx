@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "../../../hooks/use-toast.ts";
-import saveUserGithubAuthorization, { GithubAuthorizationData } from "./github.ts";
+import { useToast } from "@/hooks/use-toast.ts";
+import saveUserGithubAuthorization, {
+    GithubAuthorizationData,
+} from "@/requests/integrations/oauth2/github.ts";
 
 export default function useUserGithubAuthorization() {
     const { toast } = useToast();
