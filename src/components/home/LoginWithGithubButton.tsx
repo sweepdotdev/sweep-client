@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
-import GitHub from "../icons/gith-hub";
+import { Button } from "@/components/ui/button";
 import { stringify } from "qs";
+import GitHub from "@/components/icons/gith-hub";
 
 export const LoginWithGithubButton = ({
     csrfToken,
