@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { Link, Location, useLocation } from "react-router-dom";
-import { House, LogIn } from "lucide-react";
+import { Compass, House, LogIn } from "lucide-react";
 import { ModeToggle } from "@/components/root/mode-toggle.tsx";
 import { useStoreInContext } from "@/lib/zustand.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -25,7 +25,13 @@ export default function AppBar(): ReactElement {
                 "absolute w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
             }
         >
-            <div>{authenticated ? <SidebarTrigger /> : <></>}</div>
+            <SidebarTrigger
+                className={
+                    "bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                }
+            >
+                <Compass className={"h-4 w-4 text-black dark:text-white"} />
+            </SidebarTrigger>
             <div className={"p-4 space-x-4 flex items-center"}>
                 {authenticated && pathname !== "/" ? (
                     <Link to={"/"} className={"text-black dark:text-white flex items-center"}>
