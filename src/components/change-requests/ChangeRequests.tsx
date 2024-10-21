@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useStoreInContext } from "../../lib/zustand.tsx";
+import { useStoreInContext } from "@/lib/zustand.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
-import { getAllChangeRequests } from "../../requests/change-requests/change-requests.ts";
-import { Button } from "../ui/button.tsx";
+import { getAllChangeRequests } from "@/requests/change-requests/change-requests.ts";
+import { Button } from "@/components/ui/button.tsx";
 
 export default function ChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
