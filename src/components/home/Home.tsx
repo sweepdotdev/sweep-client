@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useStoreInContext } from "../../lib/zustand";
-import { ProviderName } from "../../requests/integrations/oauth2/github";
-import { GitConnectionPrompt } from "./GitConnectionPrompt";
+import { useStoreInContext } from "@/lib/zustand";
+import { ProviderName } from "@/requests/integrations/oauth2/github";
+import { GitConnectionPrompt } from "@/components/home/GitConnectionPrompt";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const ACCEPTED_GIT_PROVIDERS = new Set(["github"]);
