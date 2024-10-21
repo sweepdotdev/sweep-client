@@ -1,4 +1,4 @@
-import { Axios } from "../../lib/axios.ts";
+import { Axios } from "@/lib/axios.ts";
 import { AxiosResponse } from "axios";
 
 export interface InviteCodeRequestData {
