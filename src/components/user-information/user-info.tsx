@@ -1,14 +1,21 @@
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card.tsx";
+
 import { ReactElement, useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card.tsx";
-import { Input } from "../ui/input.tsx";
-import { useStoreInContext } from "../../lib/zustand.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { useStoreInContext } from "@/lib/zustand.tsx";
 import { useQuery } from "@tanstack/react-query";
-import { Label } from "../ui/label.tsx";
-import { getInviteCode } from "../../requests/user/get-invite-code.ts";
-import { Button } from "../ui/button.tsx";
+import { Label } from "@/components/ui/label.tsx";
+import { getInviteCode } from "@/requests/user/get-invite-code.ts";
+import { Button } from "@/components/ui/button.tsx";
 import { Copy } from "lucide-react";
-import { useToast } from "../../hooks/use-toast.ts";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip.tsx";
+import { useToast } from "@/hooks/use-toast.ts";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 
 interface InviteCode {
     id: string;
