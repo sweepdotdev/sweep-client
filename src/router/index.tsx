@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../components/login/Login.tsx";
-import Root from "../components/Root.tsx";
-import ManagerRegister from "../components/register/ManagerRegister.tsx";
-import UserRegister from "../components/register/UserRegister.tsx";
-import UserInfo from "../components/user-information/user-info.tsx";
-import Home from "../components/home/Home.tsx";
-import GithubCallbackPage from "../components/callbacks/GithubCallbackPage.tsx";
-import ChangeRequests from "../components/change-requests/ChangeRequests.tsx";
-import CreateChangeRequests from "../components/change-requests/CreateChangeRequests.tsx";
+import Login from "@/components/login/Login.tsx";
+import Root from "@/components/Root.tsx";
+import ManagerRegister from "@/components/register/ManagerRegister.tsx";
+import UserRegister from "@/components/register/UserRegister.tsx";
+import UserInfo from "@/components/user-information/user-info.tsx";
+import Home from "@/components/home/Home.tsx";
+import GithubCallbackPage from "@/components/callbacks/GithubCallbackPage.tsx";
+import ChangeRequests from "@/components/change-requests/ChangeRequests.tsx";
+import CreateChangeRequests from "@/components/change-requests/CreateChangeRequests.tsx";
 
 export const router = createBrowserRouter([
     {
