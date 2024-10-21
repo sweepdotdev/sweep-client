@@ -1,13 +1,15 @@
-import { Cpu, Moon, Sun } from "lucide-react";
-
-import { Button } from "../ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { useTheme } from "../theme-provider";
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
     DropdownMenuCheckboxItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-} from "../ui/dropdown-menu.tsx";
+} from "@/components/ui/dropdown-menu";
+
+import { Cpu, Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/theme-provider";
 
 export function ModeToggle() {
     const { theme, setTheme } = useTheme();
