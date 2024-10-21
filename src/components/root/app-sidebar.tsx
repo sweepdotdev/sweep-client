@@ -1,6 +1,12 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "../ui/sidebar";
 import { ReactElement } from "react";
-import UserDropdown from "./user-dropdown.tsx";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+} from "@/components/ui/sidebar";
+import UserDropdown from "@/components/root/user-dropdown.tsx";
 
 export function AppSidebar(): ReactElement {
     return (
