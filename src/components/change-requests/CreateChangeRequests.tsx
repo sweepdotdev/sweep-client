@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from "react";
-import { useStoreInContext } from "../../lib/zustand.tsx";
+import { useStoreInContext } from "@/lib/zustand.tsx";
 import { useNavigate } from "react-router-dom";
 import {
     Card,
@@ -8,8 +8,8 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "../ui/card.tsx";
-import { Button } from "../ui/button.tsx";
+} from "@/components/ui/card.tsx";
+import { Button } from "@/components/ui/button.tsx";
 
 export default function CreateChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
