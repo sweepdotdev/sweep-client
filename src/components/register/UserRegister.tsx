@@ -6,21 +6,28 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "../ui/card.tsx";
+} from "@/components/ui/card.tsx";
 import { Link, NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { registerUserSchema } from "../../schemas/register-member.ts";
+import { registerUserSchema } from "@/schemas/register-member.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form.tsx";
-import { Input } from "../ui/input.tsx";
-import { Button } from "../ui/button.tsx";
-import useRegisterUser from "../../requests/register/use-register.tsx";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { AxiosResponse } from "axios";
-import { useToast } from "../../hooks/use-toast.ts";
+import { useToast } from "@/hooks/use-toast.ts";
+import { verifyJWT } from "@/lib/security.ts";
+import { useStoreInContext } from "@/lib/zustand.tsx";
+import useRegisterUser from "@/requests/register/use-register.tsx";
 import Cookies from "js-cookie";
-import { verifyJWT } from "../../lib/security.ts";
-import { useStoreInContext } from "../../lib/zustand.tsx";
 
 export interface StatePayload {
     loggedIn: boolean;
