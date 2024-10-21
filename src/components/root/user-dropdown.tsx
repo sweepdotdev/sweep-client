@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-import { useStoreInContext } from "../../lib/zustand.tsx";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,11 +5,14 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "../ui/dropdown-menu.tsx";
-import { Button } from "../ui/button.tsx";
+} from "@/components/ui/dropdown-menu.tsx";
+
+import { ReactElement } from "react";
+import { useStoreInContext } from "@/lib/zustand.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { PowerIcon, CircleUser, ChevronDown } from "lucide-react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
-import useLogout from "../../requests/logout/use-logout.tsx";
+import useLogout from "@/requests/logout/use-logout.tsx";
 
 export default function UserDropdown(): ReactElement {
     const getEmail: string = useStoreInContext((state) => state.email);
@@ -22,9 +23,10 @@ export default function UserDropdown(): ReactElement {
     async function logoutUser() {
         await logoutMutation.mutateAsync();
 
-        clearState();
-
-        redirect("/login");
+        if (logoutMutation.isSuccess) {
+            clearState();
+            redirect("/login");
+        }
     }
 
     return (
