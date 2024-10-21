@@ -1,4 +1,3 @@
-import { ReactElement, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -6,20 +5,30 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "../ui/card.tsx";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+} from "@/components/ui/card.tsx";
+
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+
 import { z } from "zod";
+import { ReactElement, useEffect } from "react";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../schemas/login.ts";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
-import { SessionActions, SessionState, useStoreInContext } from "../../lib/zustand.tsx";
-import { verifyJWT } from "../../lib/security.ts";
+import { loginSchema } from "@/schemas/login.ts";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SessionActions, SessionState, useStoreInContext } from "@/lib/zustand.tsx";
+import { verifyJWT } from "@/lib/security.ts";
 import { AxiosResponse } from "axios";
 import { UseMutationResult } from "@tanstack/react-query";
-import useLogin, { LoginData } from "../../requests/login/use-login.tsx";
+import useLogin, { LoginData } from "@/requests/login/use-login.tsx";
 import Cookies from "js-cookie";
 
 export default function Login(): ReactElement {
