@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
-import { useStoreInContext } from "../lib/zustand.tsx";
+import { useStoreInContext } from "@/lib/zustand.tsx";
 import { isAfter } from "date-fns";
-import AppBar from "./root/app-bar.tsx";
-import { AppSidebar } from "./root/app-sidebar.tsx";
-import { SidebarProvider } from "./ui/sidebar.tsx";
+import { AppSidebar } from "@/components/root/app-sidebar.tsx";
+import { SidebarProvider } from "@/components/ui/sidebar.tsx";
+import AppBar from "@/components/root/app-bar.tsx";
 
 export default function Root(): ReactElement {
     const sessionExpiry: Date | null = useStoreInContext((state) => state.expires);
