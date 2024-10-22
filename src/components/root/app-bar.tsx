@@ -18,11 +18,7 @@ export default function AppBar(): ReactElement {
     }, [loggedIn]);
 
     return (
-        <div
-            className={
-                "absolute w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
-            }
-        >
+        <div className={"absolute right-5 top-2 flex justify-end items-center"}>
             <div className={"p-4 flex justify-center items-center "}>
                 {authenticated ? (
                     <SidebarTrigger
