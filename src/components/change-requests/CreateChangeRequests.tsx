@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { changeRequestSchema } from "@/schemas/change-requests";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CreateChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -66,7 +67,7 @@ export default function CreateChangeRequests(): ReactElement {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                             <FormField
                                 control={form.control}
                                 name={"command"}
@@ -74,7 +75,11 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Command</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"python -m pip install --upgrade pip"}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormDescription>
                                             Enter the command you would like to apply across
@@ -91,7 +96,11 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Package Manager</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"pip"}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -104,7 +113,11 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Package Manager Version</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"24.1"}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -117,7 +130,11 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Commit Message</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"Updated pip to latest version"}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -130,7 +147,11 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Branch Name</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"pip-update"}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -143,8 +164,39 @@ export default function CreateChangeRequests(): ReactElement {
                                     <FormItem>
                                         <FormLabel>Pull Request Title</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                className={"font-mono"}
+                                                placeholder={"Upgraded Pip To Latest Version"}
+                                                {...field}
+                                            />
                                         </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={"dryRun"}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className={"flex items-center space-x-2"}>
+                                            <FormLabel>
+                                                Dry-Run ({field.value ? "Yes" : "No"})
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Checkbox
+                                                    className={"h-5 w-5"}
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </div>
+
+                                        <FormDescription>
+                                            When enabled, dry run won't apply the issued command to
+                                            the actual repository, but instead will will just test
+                                            the command.
+                                        </FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}
