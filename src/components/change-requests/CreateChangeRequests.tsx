@@ -27,10 +27,13 @@ import { useForm } from "react-hook-form";
 import { changeRequestSchema } from "@/schemas/change-requests";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Checkbox } from "@/components/ui/checkbox";
+import useCreateChangeRequest from "@/requests/change-requests/use-create-change-request";
+import { AxiosResponse } from "axios";
 
 export default function CreateChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const redirect = useNavigate();
+    const changeRequestMutation = useCreateChangeRequest();
 
     useEffect(() => {
         if (!loggedIn) {
@@ -54,6 +57,18 @@ export default function CreateChangeRequests(): ReactElement {
 
     async function onSubmit(values: z.infer<typeof changeRequestSchema>): Promise<void> {
         console.log(values);
+        const res: AxiosResponse = await changeRequestMutation.mutateAsync({
+            command: values.command,
+            packageManager: values.packageManager,
+            packageManagerVersion: values.packageManagerVersion,
+            customCommitMessage: values.customCommitMessage,
+            customBranchName: values.customBranchName,
+            customPullRequestTitle: values.customPullRequestTitle,
+            eligibleGitNamespaces: values.eligibleGitNamespaces,
+            dryRun: values.dryRun,
+        });
+
+        console.log(res);
     }
 
     return (
