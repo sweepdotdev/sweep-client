@@ -1,16 +1,13 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Link, Location, useLocation } from "react-router-dom";
-import { Compass, LogIn } from "lucide-react";
+import { Compass } from "lucide-react";
 import { ModeToggle } from "@/components/root/mode-toggle.tsx";
 import { useStoreInContext } from "@/lib/zustand.tsx";
-import { Button } from "@/components/ui/button.tsx";
 import { SidebarTrigger } from "@/components/ui/sidebar.tsx";
 import GlobalSearch from "@/components/root/global-search";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const [authenticated, setAuthenticated] = useState<boolean>(false);
-    const { pathname }: Location = useLocation();
 
     useEffect(() => {
         if (loggedIn) {
@@ -26,32 +23,20 @@ export default function AppBar(): ReactElement {
                 "absolute w-full h-[100px] dark:bg-neutral-600 bg-neutral-300 flex justify-end items-center"
             }
         >
-            <SidebarTrigger
-                className={
-                    "bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
-                }
-            >
-                <Compass className={"h-4 w-4 text-black dark:text-white"} />
-            </SidebarTrigger>
-            <div className={"p-4 space-x-4 flex items-center"}>
-                {authenticated ? <GlobalSearch /> : null}
-
-                {!authenticated && pathname !== "/login" ? (
-                    <Link
-                        to={"/login"}
-                        className={"hover:underline text-black dark:text-white flex items-center"}
+            <div className={"p-4 flex justify-center items-center "}>
+                {authenticated ? (
+                    <SidebarTrigger
+                        className={
+                            "bg-neutral-200 mr-2 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                        }
                     >
-                        <Button
-                            className={
-                                "bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
-                            }
-                        >
-                            Login <LogIn className={"ml-2 h-4 w-4"} />
-                        </Button>
-                    </Link>
+                        <Compass className={"h-4 w-4 text-black dark:text-white"} />
+                    </SidebarTrigger>
                 ) : (
                     <></>
                 )}
+
+                {authenticated ? <GlobalSearch /> : null}
 
                 <ModeToggle />
             </div>
