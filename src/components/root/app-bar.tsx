@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
 import { Link, Location, useLocation } from "react-router-dom";
-import { Compass, House, LogIn } from "lucide-react";
+import { Compass, LogIn } from "lucide-react";
 import { ModeToggle } from "@/components/root/mode-toggle.tsx";
 import { useStoreInContext } from "@/lib/zustand.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { SidebarTrigger } from "@/components/ui/sidebar.tsx";
+import GlobalSearch from "@/components/root/global-search";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -33,19 +34,7 @@ export default function AppBar(): ReactElement {
                 <Compass className={"h-4 w-4 text-black dark:text-white"} />
             </SidebarTrigger>
             <div className={"p-4 space-x-4 flex items-center"}>
-                {authenticated && pathname !== "/" ? (
-                    <Link to={"/"} className={"text-black dark:text-white flex items-center"}>
-                        <Button
-                            className={
-                                "dark:text-white text-black bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
-                            }
-                        >
-                            Home <House className={"ml-2 h-4 w-4"} />
-                        </Button>
-                    </Link>
-                ) : (
-                    <></>
-                )}
+                {authenticated ? <GlobalSearch /> : null}
 
                 {!authenticated && pathname !== "/login" ? (
                     <Link
