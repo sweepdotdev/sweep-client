@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "./components/ui/toaster.tsx";
 import { StoreProvider } from "./lib/zustand.tsx";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
-import "./index.css";
+import "./global.css";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
