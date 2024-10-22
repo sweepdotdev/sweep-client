@@ -32,7 +32,7 @@ export default function UserDropdown(): ReactElement {
             <DropdownMenuTrigger asChild>
                 <Button
                     className={
-                        "text-black dark:text-white bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
+                        "w-full text-black dark:text-white bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 hover:dark:bg-neutral-800 focus-visible:ring-0"
                     }
                 >
                     {getEmail} <ChevronDown className={"h-3 w-3 ml-2"} />
