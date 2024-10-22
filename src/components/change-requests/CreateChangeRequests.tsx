@@ -67,7 +67,11 @@ export default function CreateChangeRequests(): ReactElement {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                        <form
+                            id={"changeRequest"}
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-3"
+                        >
                             <FormField
                                 control={form.control}
                                 name={"command"}
@@ -206,7 +210,9 @@ export default function CreateChangeRequests(): ReactElement {
                 </CardContent>
                 <CardFooter>
                     <div className={"w-full flex justify-end"}>
-                        <Button>Submit</Button>
+                        <Button form={"changeRequest"} type={"submit"}>
+                            Submit
+                        </Button>
                     </div>
                 </CardFooter>
             </Card>
