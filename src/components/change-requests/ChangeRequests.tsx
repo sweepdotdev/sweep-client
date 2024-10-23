@@ -3,7 +3,7 @@ import { useStoreInContext } from "@/lib/zustand.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
-import { getAllChangeRequests } from "@/requests/change-requests/change-requests.ts";
+import { getAllChangeRequests } from "@/requests/change-requests/get-change-requests.ts";
 import { Button } from "@/components/ui/button.tsx";
 
 export default function ChangeRequests(): ReactElement {
