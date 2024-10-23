@@ -24,7 +24,7 @@ export async function createChangeRequest({
 }: CreateChangeRequest): Promise<AxiosResponse> {
     return Axios({
         method: "POST",
-        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/change-requests`,
+        url: `${import.meta.env.VITE_BACKEND_BASE_URL}/v1/change_requests`,
         headers: {
             "Content-Type": "application/json",
         },
