@@ -3,12 +3,16 @@ import { useToast } from "@/hooks/use-toast.ts";
 import saveUserGithubAuthorization, {
     GithubAuthorizationData,
 } from "@/requests/integrations/oauth2/github.ts";
+import { AxiosResponse } from "axios";
 
 export default function useUserGithubAuthorization() {
     const { toast } = useToast();
     return useMutation({
         mutationKey: ["saveUserGithubAuthorization"],
-        mutationFn: async ({ providerName, authorizationCode }: GithubAuthorizationData) =>
+        mutationFn: async ({
+            providerName,
+            authorizationCode,
+        }: GithubAuthorizationData): Promise<AxiosResponse> =>
             saveUserGithubAuthorization({ providerName, authorizationCode }),
         onSuccess: async () => {
             toast({
