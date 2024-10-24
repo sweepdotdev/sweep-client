@@ -9,7 +9,7 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "@/components/ui/command";
-import { GitPullRequest, GitPullRequestCreate, Home, UserCircle } from "lucide-react";
+import { DollarSign, GitPullRequest, GitPullRequestCreate, Home, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -38,6 +38,10 @@ export default function GlobalSearch(): ReactElement {
 
             if (e.key === "=" && (e.metaKey || e.ctrlKey)) {
                 redirect("/change-requests/create");
+            }
+
+            if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
+                redirect("/billing");
             }
 
             if (e.key === "Enter") {
@@ -95,6 +99,14 @@ export default function GlobalSearch(): ReactElement {
                             <GitPullRequestCreate className={"mr-3"} />
                             <span>Create Change Request</span>
                             <CommandShortcut>⌃+</CommandShortcut>
+                        </CommandItem>
+                    </CommandGroup>
+                    <CommandSeparator />
+                    <CommandGroup>
+                        <CommandItem onSelect={() => redirect("/billing")}>
+                            <DollarSign className={"mr-3"} />
+                            <span>Billing & Subscriptions</span>
+                            <CommandShortcut>⌃B</CommandShortcut>
                         </CommandItem>
                     </CommandGroup>
                 </CommandList>
