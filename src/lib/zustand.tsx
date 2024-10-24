@@ -9,6 +9,7 @@ export interface SessionState {
     lastName: string;
     email: string;
     organization: string;
+    stripeClientSecret?: string;
     sub: string;
     iss: string;
 }
@@ -18,6 +19,7 @@ export interface SessionActions {
     clearState: () => void;
     getState: () => SessionState;
     setState: (val: SessionState) => void;
+    setClientSecret: (clientSecret: string) => void;
 }
 
 const StoreContext: Context<StoreApi<SessionState & SessionActions> | null> =
@@ -38,6 +40,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     organization: "",
                     sub: "",
                     iss: "",
+                    stripeClientSecret: undefined,
                     setState: (val: SessionState) =>
                         set((state: SessionState) => Object.assign(state, val)),
                     setExpiry: (value: Date) => set(() => ({ expires: value })),
@@ -52,6 +55,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                             iss: "",
                         })),
                     getState: () => get(),
+                    setClientSecret: (clientSecret: string) => ({
+                        stripeClientSecret: clientSecret,
+                    }),
                 }),
                 {
                     name: "sweep-storage",
