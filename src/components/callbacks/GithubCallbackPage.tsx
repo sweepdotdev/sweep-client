@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import useUserGithubAuthorization from "@/requests/integrations/oauth2/use-user-github-authorization";
 
 export default function GithubCallbackPage() {
     const { toast } = useToast();
-    const navigate = useNavigate();
+    const redirect: NavigateFunction = useNavigate();
     const [searchParams] = useSearchParams();
     const githubAuthorizationMutation = useUserGithubAuthorization();
 
@@ -20,15 +20,14 @@ export default function GithubCallbackPage() {
                     providerName: "github",
                     authorizationCode: code,
                 });
-                navigate("/");
             } catch {
                 toast({
                     title: "Oops!",
                     description: "Failed to connect github account",
                     variant: "destructive",
                 });
-                navigate("/");
             }
+            redirect("/");
         })();
     }, [searchParams]);
 
