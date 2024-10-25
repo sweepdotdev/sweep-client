@@ -10,6 +10,7 @@ export interface SessionState {
     email: string;
     organization: string;
     stripeClientSecret?: string;
+    hasOAuth2Credentials?: boolean;
     sub: string;
     iss: string;
 }
@@ -19,6 +20,7 @@ export interface SessionActions {
     clearState: () => void;
     getState: () => SessionState;
     setState: (val: SessionState) => void;
+    setHasOAuth2Credentials: () => void;
     setClientSecret: (clientSecret: string) => void;
 }
 
@@ -41,9 +43,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     sub: "",
                     iss: "",
                     stripeClientSecret: undefined,
+                    hasOAuth2Credentials: false,
                     setState: (val: SessionState) =>
                         set((state: SessionState) => Object.assign(state, val)),
                     setExpiry: (value: Date) => set(() => ({ expires: value })),
+                    setHasOAuth2Credentials: () => set(() => ({ hasOAuth2Credentials: true })),
                     clearState: () =>
                         set(() => ({
                             loggedIn: false,
