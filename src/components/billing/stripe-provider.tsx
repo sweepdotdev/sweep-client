@@ -26,7 +26,7 @@ export default function StripeProvider(): ReactElement {
     if (intentMutation.isSuccess) {
         return (
             <Elements stripe={stripe} options={{ clientSecret: clientSecret }}>
-                <PaymentElement></PaymentElement>
+                <PaymentElement />
             </Elements>
         );
     }
