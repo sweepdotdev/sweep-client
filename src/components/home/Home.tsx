@@ -14,6 +14,9 @@ export default function Home(): ReactElement {
     const [hasAssociatedGit, setHasAssociatedGit] = useState<boolean>(false);
     const redirect: NavigateFunction = useNavigate();
     const providers: ProviderName[] = []; // TODO: get from API
+    const hasOAuth2Linkage: boolean | undefined = useStoreInContext(
+        (state) => state.hasOAuth2Credentials,
+    );
 
     useEffect(() => {
         if (!loggedIn) {
@@ -43,13 +46,15 @@ export default function Home(): ReactElement {
         <div className={"h-screen w-screen"}>
             <div className={"h-full w-full flex items-center justify-center"}>
                 {OAuthQuery.isLoading ? (
-                    <div className={"h-screen w-screen flex items-center justify-center"}>
-                        <Loader className={"h-10 w-10 animate-spin"} />
-                    </div>
+                    <Loader className={"h-10 w-10 animate-spin"} />
                 ) : (
                     <div>
-                        {/* TODO[P3]: "Welcome back to your org" dashboard */}
-                        {!hasAssociatedGit && <GitConnectionPrompt />}
+                        {!hasAssociatedGit && !hasOAuth2Linkage ? (
+                            <GitConnectionPrompt />
+                        ) : (
+                            // TODO: WRITE A HOME SUB-COMPONENT
+                            <div>Home</div>
+                        )}
                     </div>
                 )}
             </div>
