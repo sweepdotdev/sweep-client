@@ -28,17 +28,11 @@ export default function Home(): ReactElement {
         queryFn: async () => await confirmOAuthLinkage(),
     });
 
-    if (OAuthQuery.isLoading) {
-        return (
-            <div className={"h-screen w-screen flex items-center justify-center"}>
-                <Loader className={"h-10 w-10 animate-spin"} />
-            </div>
-        );
-    }
-
-    if (OAuthQuery.data?.status === 201) {
-        setOAuth2Linkage();
-    }
+    useEffect(() => {
+        if (OAuthQuery.data?.status === 201) {
+            setOAuth2Linkage();
+        }
+    }, [OAuthQuery.data, setOAuth2Linkage]);
 
     useEffect(() => {
         const exists: boolean = providers.some((p) => ACCEPTED_GIT_PROVIDERS.has(p));
@@ -48,8 +42,16 @@ export default function Home(): ReactElement {
     return (
         <div className={"h-screen w-screen"}>
             <div className={"h-full w-full flex items-center justify-center"}>
-                {/* TODO[P3]: "Welcome back to your org" dashboard */}
-                {!hasAssociatedGit && <GitConnectionPrompt />}
+                {OAuthQuery.isLoading ? (
+                    <div className={"h-screen w-screen flex items-center justify-center"}>
+                        <Loader className={"h-10 w-10 animate-spin"} />
+                    </div>
+                ) : (
+                    <div>
+                        {/* TODO[P3]: "Welcome back to your org" dashboard */}
+                        {!hasAssociatedGit && <GitConnectionPrompt />}
+                    </div>
+                )}
             </div>
         </div>
     );
