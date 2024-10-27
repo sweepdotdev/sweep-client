@@ -20,7 +20,7 @@ import {
 import { z } from "zod";
 import { ReactElement, useEffect } from "react";
 import { useStoreInContext } from "@/lib/zustand.tsx";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ import { AxiosResponse } from "axios";
 
 export default function CreateChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
-    const redirect = useNavigate();
+    const redirect: NavigateFunction = useNavigate();
     const changeRequestMutation = useCreateChangeRequest();
 
     useEffect(() => {
@@ -56,7 +56,6 @@ export default function CreateChangeRequests(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof changeRequestSchema>): Promise<void> {
-        console.log(values);
         const res: AxiosResponse = await changeRequestMutation.mutateAsync({
             command: values.command,
             packageManager: values.packageManager,
@@ -68,7 +67,9 @@ export default function CreateChangeRequests(): ReactElement {
             dryRun: values.dryRun,
         });
 
-        console.log(res);
+        if (res.status === 202) {
+            redirect("/change-requests");
+        }
     }
 
     return (
