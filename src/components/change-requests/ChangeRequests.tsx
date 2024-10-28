@@ -26,9 +26,21 @@ interface ChangeRequestPayload {
     dry_run: boolean;
 }
 
+export interface Pagination {
+    pageIndex: number;
+    pageSize: number;
+}
+
 export default function ChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const redirect: NavigateFunction = useNavigate();
+
+    useEffect(() => {
+        if (!loggedIn) {
+            redirect("/login");
+        }
+    });
+
     const blankChangeRequest: ChangeRequest = {
         packageManager: "",
         packageManagerVersion: "",
@@ -42,17 +54,15 @@ export default function ChangeRequests(): ReactElement {
         createdAt: new Date(),
     };
 
-    useEffect(() => {
-        if (!loggedIn) {
-            redirect("/login");
-        }
+    const [pagination, setPagination] = useState<Pagination>({
+        pageIndex: 0,
+        pageSize: 10,
     });
 
     const changeRequestQuery = useQuery({
         queryKey: ["getChangeLogs"],
         queryFn: getAllChangeRequests,
     });
-
     const [data, setData] = useState<ChangeRequestPayload[] | null>(null);
     const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>([blankChangeRequest]);
 
@@ -106,7 +116,12 @@ export default function ChangeRequests(): ReactElement {
                     <Loader className={"h-8 w-8 animate-spin"} />
                 </div>
             ) : (
-                <DataTable columns={columns} data={changeRequests} />
+                <DataTable
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    columns={columns}
+                    data={changeRequests}
+                />
             )}
         </div>
     );
