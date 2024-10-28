@@ -39,7 +39,7 @@ export default function ChangeRequests(): ReactElement {
         customPullRequestTitle: "",
         dryRun: false,
         status: "pending",
-        createdAt: "",
+        createdAt: new Date(),
     };
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function ChangeRequests(): ReactElement {
                     customPullRequestTitle: data[i].custom_pull_request_title,
                     dryRun: data[i].dry_run,
                     status: data[i].status,
-                    createdAt: data[i].created_at,
+                    createdAt: new Date(data[i].created_at),
                 };
                 setChangeRequests([changeRequest]);
             }
