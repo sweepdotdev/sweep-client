@@ -14,12 +14,35 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { Check } from "lucide-react";
+import { Pagination } from "@/components/change-requests/ChangeRequests";
+import { Label } from "@/components/ui/label";
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
+    pagination: Pagination;
+    setPagination: Dispatch<SetStateAction<Pagination>>;
+    pageCount: number;
 }
 
-export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({
+    table,
+    pageCount,
+    pagination,
+    setPagination,
+}: DataTablePaginationProps<TData>) {
+    const [goToPage, setGoToPage] = useState<number>(1);
+
+    function handlePageSubmission() {
+        if (goToPage < pageCount) return;
+
+        setPagination({
+            pageSize: pagination.pageSize,
+            pageIndex: goToPage - 1,
+        });
+    }
     return (
         <div className="flex items-center justify-between px-2">
             <div className="flex-1 text-sm text-muted-foreground">
@@ -49,6 +72,22 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </div>
                 <div className="flex w-[100px] items-center justify-center text-sm font-medium">
                     Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                </div>
+                <div className={"flex items-center space-x-2"}>
+                    <Label>Go to</Label>
+                    <Input
+                        className={"w-24"}
+                        value={goToPage}
+                        readOnly={pageCount === 1}
+                        disabled={pageCount === 1}
+                        type={"number"}
+                        onChange={(val: ChangeEvent<HTMLInputElement>) =>
+                            setGoToPage(parseInt(val.target.value))
+                        }
+                    />
+                    <Button disabled={pageCount === 1} size={"icon"} onClick={handlePageSubmission}>
+                        <Check className={"h-4 w-4"} />
+                    </Button>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Button
