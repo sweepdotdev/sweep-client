@@ -3,6 +3,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ReactElement } from "react";
 import { format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type ChangeRequest = {
     packageManager: string;
@@ -14,7 +16,7 @@ export type ChangeRequest = {
     customPullRequestTitle: string;
     dryRun: boolean;
     status: "pending" | "in_progress" | "completed";
-    createdAt: string;
+    createdAt: Date;
 };
 
 function determineStatusColor(status: string): string {
@@ -41,7 +43,14 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "command",
-        header: "Command",
+        header: ({ column }) => {
+            return (
+                <Button variant={"ghost"} onClick={(): boolean => column.getIsSorted() === "asc"}>
+                    Sweep Command
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: "customBranchName",
@@ -53,7 +62,14 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "customPullRequestTitle",
-        header: "Pull Request Title",
+        header: ({ column }) => {
+            return (
+                <Button variant={"ghost"} onClick={() => column.getIsSorted() === "asc"}>
+                    Pull Request Title
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: "status",
@@ -66,14 +82,21 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "createdAt",
-        header: "Creation Date",
+        header: ({ column }) => {
+            return (
+                <Button variant={"ghost"} onClick={() => column.getIsSorted() === "asc"}>
+                    Creation Date
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
         cell: ({ row }): ReactElement => {
-            const rawDate: string = row.getValue("createdAt");
+            const rawDate: Date = row.getValue("createdAt");
             if (!rawDate) {
                 return <></>;
             }
-            const modifiedDate: string = format(new Date(rawDate), "PPPP");
-            const modifiedTime: string = format(new Date(rawDate), "pppp");
+            const modifiedDate: string = format(rawDate, "PPPP");
+            const modifiedTime: string = format(rawDate, "pppp");
             return (
                 <Tooltip>
                     <TooltipTrigger>
