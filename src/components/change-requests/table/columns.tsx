@@ -51,6 +51,13 @@ export const columns: ColumnDef<ChangeRequest>[] = [
                 </Button>
             );
         },
+        cell: ({ row }) => {
+            return (
+                <div>
+                    <pre className={"bg-muted rounded-md p-2"}>{row.getValue("command")}</pre>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "customBranchName",
@@ -95,8 +102,8 @@ export const columns: ColumnDef<ChangeRequest>[] = [
             if (!rawDate) {
                 return <></>;
             }
-            const modifiedDate: string = format(rawDate, "PPPP");
-            const modifiedTime: string = format(rawDate, "pppp");
+            const modifiedDate: string = format(rawDate, "PPP");
+            const modifiedTime: string = format(rawDate, "pp");
             return (
                 <Tooltip>
                     <TooltipTrigger>
