@@ -9,6 +9,7 @@ import GithubCallbackPage from "@/components/callbacks/GithubCallbackPage.tsx";
 import ChangeRequests from "@/components/change-requests/ChangeRequests.tsx";
 import CreateChangeRequests from "@/components/change-requests/CreateChangeRequests.tsx";
 import Billing from "@/components/billing/Billing";
+import IndividualChangeRequest from "@/components/change-requests/IndividualChangeRequest";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: "/change-requests/create",
                 element: <CreateChangeRequests />,
+            },
+            {
+                path: "/change-requests/:id",
+                element: <IndividualChangeRequest />,
             },
             {
                 path: "/billing",
