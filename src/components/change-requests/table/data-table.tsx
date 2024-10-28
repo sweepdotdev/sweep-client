@@ -4,6 +4,8 @@ import {
     getCoreRowModel,
     useReactTable,
     VisibilityState,
+    SortingState,
+    getSortedRowModel,
 } from "@tanstack/react-table";
 
 import type { Table as TanstackTable } from "@tanstack/react-table";
@@ -36,15 +38,24 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>): ReactElement {
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+        packageManager: false,
+        packageManagerVersion: false,
+        customBranchName: false,
+        customCommitMessage: false,
+    });
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     const table: TanstackTable<TData> = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
         state: {
             columnVisibility,
+            sorting,
         },
     });
 
