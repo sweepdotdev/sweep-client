@@ -6,6 +6,7 @@ import {
     VisibilityState,
     SortingState,
     getSortedRowModel,
+    getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import type { Table as TanstackTable } from "@tanstack/react-table";
@@ -26,17 +27,23 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import { ReactElement, useState } from "react";
+import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { DataTablePagination } from "@/components/change-requests/table/pagination";
+import { Pagination } from "@/components/change-requests/ChangeRequests";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    pagination: Pagination;
+    setPagination: Dispatch<SetStateAction<Pagination>>;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    pagination,
+    setPagination,
 }: DataTableProps<TData, TValue>): ReactElement {
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
         packageManager: false,
@@ -53,9 +60,12 @@ export function DataTable<TData, TValue>({
         onColumnVisibilityChange: setColumnVisibility,
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        onPaginationChange: setPagination,
         state: {
             columnVisibility,
             sorting,
+            pagination,
         },
     });
 
@@ -88,56 +98,58 @@ export function DataTable<TData, TValue>({
                             })}
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <div className={"rounded-md border shadow-2xl"}>
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead key={header.id}>
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(
-                                                          header.column.columnDef.header,
-                                                          header.getContext(),
-                                                      )}
-                                            </TableHead>
-                                        );
-                                    })}
+            </div>
+
+            <div className={"rounded-md border shadow-2xl"}>
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                      header.column.columnDef.header,
+                                                      header.getContext(),
+                                                  )}
+                                        </TableHead>
+                                    );
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && "selected"}
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext(),
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={columns.length}
-                                        className="h-24 text-center"
-                                    >
-                                        No results.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                    No results.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+
+            <div className={"mt-4"}>
+                <DataTablePagination table={table} />
             </div>
         </div>
     );
