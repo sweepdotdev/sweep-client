@@ -5,10 +5,40 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { getAllChangeRequests } from "@/requests/change-requests/get-change-requests.ts";
 import { Button } from "@/components/ui/button.tsx";
+import { DataTable } from "@/components/change-requests/table/data-table";
+import { ChangeRequest, columns } from "@/components/change-requests/table/columns";
+
+interface ChangeRequestPayload {
+    id: string;
+    initiator_account_id: string;
+    num_jobs_enqueued: number;
+    organization_id: string;
+    status: string;
+    created_at: string;
+    last_updated_at: string;
+    package_manager_software: string;
+    package_manager_version: string;
+    command: string;
+    eligible_git_namespaces: string[];
+    custom_branch_name: string;
+    custom_commit_message: string;
+    custom_pull_request_title: string;
+    dry_run: boolean;
+}
 
 export default function ChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const redirect: NavigateFunction = useNavigate();
+    const blankChangeRequest: ChangeRequest = {
+        packageManager: "",
+        packageManagerVersion: "",
+        command: "",
+        eligibleGitNamespaces: [""],
+        customBranchName: "",
+        customCommitMessage: "",
+        customPullRequestTitle: "",
+        dryRun: false,
+    };
 
     useEffect(() => {
         if (!loggedIn) {
@@ -20,15 +50,35 @@ export default function ChangeRequests(): ReactElement {
         queryKey: ["getChangeLogs"],
         queryFn: getAllChangeRequests,
     });
-    const [changeRequests, setChangeRequests] = useState([]);
+
+    const [data, setData] = useState<ChangeRequestPayload[] | null>(null);
+    const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>([blankChangeRequest]);
 
     useEffect(() => {
-        if (changeRequestQuery.isSuccess) {
-            setChangeRequests(changeRequestQuery.data.data);
+        if (changeRequestQuery.isSuccess && changeRequestQuery.data?.data.data) {
+            setData(changeRequestQuery.data.data.data);
         }
-    }, [changeRequests]);
+    }, [changeRequestQuery.data]);
 
-    if (changeRequests.length === 0) {
+    useEffect(() => {
+        if (changeRequestQuery.isSuccess && data) {
+            for (let i = 0; i < data.length; i++) {
+                const changeRequest: ChangeRequest = {
+                    packageManager: data[i].package_manager_software,
+                    packageManagerVersion: data[i].package_manager_version,
+                    command: data[i].command,
+                    eligibleGitNamespaces: data[i].eligible_git_namespaces,
+                    customBranchName: data[i].custom_branch_name,
+                    customCommitMessage: data[i].custom_commit_message,
+                    customPullRequestTitle: data[i].custom_pull_request_title,
+                    dryRun: data[i].dry_run,
+                };
+                setChangeRequests([changeRequest]);
+            }
+        }
+    }, [data]);
+
+    if (data?.length === 0) {
         return (
             <div className={"h-full w-full flex items-center justify-center"}>
                 {changeRequestQuery.isLoading ? (
@@ -52,7 +102,7 @@ export default function ChangeRequests(): ReactElement {
                     <Loader className={"h-8 w-8 animate-spin"} />
                 </div>
             ) : (
-                <div>Balls</div>
+                <DataTable columns={columns} data={changeRequests} />
             )}
         </div>
     );
