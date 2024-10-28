@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { DataTable } from "@/components/change-requests/table/data-table";
 import { ChangeRequest, columns } from "@/components/change-requests/table/columns";
 
-interface ChangeRequestPayload {
+export interface ChangeRequestPayload {
     id: string;
     initiator_account_id: string;
     num_jobs_enqueued: number;
