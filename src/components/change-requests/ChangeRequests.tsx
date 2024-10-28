@@ -13,7 +13,7 @@ interface ChangeRequestPayload {
     initiator_account_id: string;
     num_jobs_enqueued: number;
     organization_id: string;
-    status: string;
+    status: "pending" | "in_progress" | "completed";
     created_at: string;
     last_updated_at: string;
     package_manager_software: string;
@@ -38,6 +38,8 @@ export default function ChangeRequests(): ReactElement {
         customCommitMessage: "",
         customPullRequestTitle: "",
         dryRun: false,
+        status: "pending",
+        createdAt: "",
     };
 
     useEffect(() => {
@@ -72,6 +74,8 @@ export default function ChangeRequests(): ReactElement {
                     customCommitMessage: data[i].custom_commit_message,
                     customPullRequestTitle: data[i].custom_pull_request_title,
                     dryRun: data[i].dry_run,
+                    status: data[i].status,
+                    createdAt: data[i].created_at,
                 };
                 setChangeRequests([changeRequest]);
             }
