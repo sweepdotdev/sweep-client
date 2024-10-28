@@ -5,8 +5,10 @@ import { format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import RedirectButton from "@/components/change-requests/table/redirect-button";
 
 export type ChangeRequest = {
+    id: string;
     packageManager: string;
     packageManagerVersion: string;
     command: string;
@@ -129,6 +131,13 @@ export const columns: ColumnDef<ChangeRequest>[] = [
                     />
                 </div>
             );
+        },
+    },
+    {
+        accessorKey: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+            return <RedirectButton id={row.original.id} />;
         },
     },
 ];
