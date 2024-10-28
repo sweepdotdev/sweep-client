@@ -6,7 +6,6 @@ import {
     VisibilityState,
     SortingState,
     getSortedRowModel,
-    getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import type { Table as TanstackTable } from "@tanstack/react-table";
@@ -37,6 +36,8 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     pagination: Pagination;
     setPagination: Dispatch<SetStateAction<Pagination>>;
+    totalPages: number;
+    setTotalPages: Dispatch<SetStateAction<number>>;
 }
 
 export function DataTable<TData, TValue>({
@@ -44,6 +45,7 @@ export function DataTable<TData, TValue>({
     data,
     pagination,
     setPagination,
+    totalPages,
 }: DataTableProps<TData, TValue>): ReactElement {
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
         packageManager: false,
@@ -60,7 +62,8 @@ export function DataTable<TData, TValue>({
         onColumnVisibilityChange: setColumnVisibility,
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        manualPagination: true,
+        pageCount: totalPages,
         onPaginationChange: setPagination,
         state: {
             columnVisibility,
@@ -149,7 +152,12 @@ export function DataTable<TData, TValue>({
             </div>
 
             <div className={"mt-4"}>
-                <DataTablePagination table={table} />
+                <DataTablePagination
+                    table={table}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                    pageCount={totalPages}
+                />
             </div>
         </div>
     );
