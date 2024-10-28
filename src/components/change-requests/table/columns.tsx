@@ -21,7 +21,7 @@ export type ChangeRequest = {
     createdAt: Date;
 };
 
-function determineStatusColor(status: string): string {
+export function determineStatusColor(status: string): string {
     switch (status) {
         case "pending":
             return "text-orange-500";
