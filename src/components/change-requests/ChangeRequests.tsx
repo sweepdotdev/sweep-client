@@ -42,6 +42,7 @@ export default function ChangeRequests(): ReactElement {
     });
 
     const blankChangeRequest: ChangeRequest = {
+        id: "",
         packageManager: "",
         packageManagerVersion: "",
         command: "",
@@ -85,6 +86,7 @@ export default function ChangeRequests(): ReactElement {
         if (changeRequestQuery.isSuccess && data) {
             for (let i = 0; i < data.length; i++) {
                 const changeRequest: ChangeRequest = {
+                    id: data[i].id,
                     packageManager: data[i].package_manager_software,
                     packageManagerVersion: data[i].package_manager_version,
                     command: data[i].command,
