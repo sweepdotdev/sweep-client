@@ -58,6 +58,7 @@ export default function ChangeRequests(): ReactElement {
         pageIndex: 0,
         pageSize: 10,
     });
+    const [totalPages, setTotalPages] = useState<number>(0);
 
     const changeRequestQuery = useQuery({
         queryKey: ["getChangeLogs"],
@@ -67,10 +68,18 @@ export default function ChangeRequests(): ReactElement {
     const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>([blankChangeRequest]);
 
     useEffect(() => {
-        if (changeRequestQuery.isSuccess && changeRequestQuery.data?.data.data) {
+        if (changeRequestQuery.isSuccess) {
             setData(changeRequestQuery.data.data.data);
         }
     }, [changeRequestQuery.data]);
+
+    useEffect(() => {
+        if (changeRequestQuery.isSuccess && changeRequestQuery.data.data.meta) {
+            setTotalPages(
+                Math.ceil(changeRequestQuery.data?.data.meta.total / pagination.pageSize),
+            );
+        }
+    }, [changeRequestQuery.isSuccess, changeRequestQuery.data?.data.meta]);
 
     useEffect(() => {
         if (changeRequestQuery.isSuccess && data) {
@@ -119,6 +128,8 @@ export default function ChangeRequests(): ReactElement {
                 <DataTable
                     pagination={pagination}
                     setPagination={setPagination}
+                    totalPages={totalPages}
+                    setTotalPages={setTotalPages}
                     columns={columns}
                     data={changeRequests}
                 />
