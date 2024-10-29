@@ -31,6 +31,20 @@ export interface Pagination {
     pageSize: number;
 }
 
+export const blankChangeRequest: ChangeRequest = {
+    id: "",
+    packageManager: "",
+    packageManagerVersion: "",
+    command: "",
+    eligibleGitNamespaces: [""],
+    customBranchName: "",
+    customCommitMessage: "",
+    customPullRequestTitle: "",
+    dryRun: false,
+    status: "pending",
+    createdAt: new Date(),
+};
+
 export default function ChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
     const redirect: NavigateFunction = useNavigate();
@@ -40,20 +54,6 @@ export default function ChangeRequests(): ReactElement {
             redirect("/login");
         }
     });
-
-    const blankChangeRequest: ChangeRequest = {
-        id: "",
-        packageManager: "",
-        packageManagerVersion: "",
-        command: "",
-        eligibleGitNamespaces: [""],
-        customBranchName: "",
-        customCommitMessage: "",
-        customPullRequestTitle: "",
-        dryRun: false,
-        status: "pending",
-        createdAt: new Date(),
-    };
 
     const [pagination, setPagination] = useState<Pagination>({
         pageIndex: 0,
