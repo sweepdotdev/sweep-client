@@ -7,7 +7,10 @@ import { Loader } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChangeRequest, determineStatusColor } from "@/components/change-requests/table/columns";
 import { Button } from "@/components/ui/button";
-import { ChangeRequestPayload } from "@/components/change-requests/ChangeRequests";
+import {
+    blankChangeRequest,
+    ChangeRequestPayload,
+} from "@/components/change-requests/ChangeRequests";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,7 +19,7 @@ import { format } from "date-fns";
 export default function IndividualChangeRequest(): ReactElement {
     const { id } = useParams();
     const redirect: NavigateFunction = useNavigate();
-    const [changeRequest, setChangeRequest] = useState<ChangeRequest | null>(null);
+    const [changeRequest, setChangeRequest] = useState<ChangeRequest>(blankChangeRequest);
 
     if (!id) redirect("/change-requests");
 
