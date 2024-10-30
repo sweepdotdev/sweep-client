@@ -6,10 +6,10 @@ import UserRegister from "@/components/register/UserRegister.tsx";
 import UserInfo from "@/components/user-information/user-info.tsx";
 import Home from "@/components/home/Home.tsx";
 import GithubCallbackPage from "@/components/callbacks/GithubCallbackPage.tsx";
-import ChangeRequests from "@/components/change-requests/ChangeRequests.tsx";
-import CreateChangeRequests from "@/components/change-requests/CreateChangeRequests.tsx";
+import ChangeRequests from "@/components/change-requests/change-requests.tsx";
+import CreateChangeRequests from "@/components/change-requests/change-request/create-change-requests.tsx";
 import Billing from "@/components/billing/Billing";
-import IndividualChangeRequest from "@/components/change-requests/IndividualChangeRequest";
+import ChangeRequest from "@/components/change-requests/change-request/change-request";
 
 export const router = createBrowserRouter([
     {
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/change-requests/:id",
-                element: <IndividualChangeRequest />,
+                element: <ChangeRequest />,
             },
             {
                 path: "/billing",
