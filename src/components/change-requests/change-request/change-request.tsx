@@ -22,16 +22,22 @@ export default function ChangeRequest(): ReactElement {
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
-            <Tabs defaultValue={"summary"}>
-                <TabsList>
-                    <TabsTrigger value={"summary"}>Change Request Summary</TabsTrigger>
-                    <TabsTrigger value={"jobs"}>Jobs</TabsTrigger>
+            <Tabs defaultValue={"summary"} className={"w-[500px]"}>
+                <TabsList className={"w-full"}>
+                    <TabsTrigger className={"w-1/2"} value={"summary"}>
+                        Change Request Summary
+                    </TabsTrigger>
+                    <TabsTrigger className={"w-1/2"} value={"jobs"}>
+                        Jobs
+                    </TabsTrigger>
                 </TabsList>
+                <TabsContent value={"summary"}>
+                    <ChangeRequestSummary changeRequestId={id!} redirect={redirect} />
+                </TabsContent>
+                <TabsContent value={"jobs"}>
+                    <div>balls</div>
+                </TabsContent>
             </Tabs>
-            <TabsContent value={"summary"}>
-                <ChangeRequestSummary changeRequestId={id!} redirect={redirect} />
-            </TabsContent>
-            <TabsContent value={"jobs"}></TabsContent>
         </div>
     );
 }
