@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Check } from "lucide-react";
-import { Pagination } from "@/components/change-requests/ChangeRequests";
+import { Pagination } from "@/components/change-requests/change-requests";
 import { Label } from "@/components/ui/label";
 
 interface DataTablePaginationProps<TData> {
@@ -36,8 +36,9 @@ export function DataTablePagination<TData>({
     const [goToPage, setGoToPage] = useState<number>(1);
 
     function handlePageSubmission() {
-        if (goToPage < pageCount) return;
-
+        if (goToPage > pageCount) {
+            return;
+        }
         setPagination({
             pageSize: pagination.pageSize,
             pageIndex: goToPage - 1,
@@ -72,11 +73,13 @@ export function DataTablePagination<TData>({
                 <div className={"flex items-center space-x-2"}>
                     <Label>Go to</Label>
                     <Input
+                        min={1}
+                        max={pageCount}
+                        type={"number"}
                         className={"w-24"}
                         value={goToPage}
                         readOnly={pageCount === 1}
                         disabled={pageCount === 1}
-                        type={"number"}
                         onChange={(val: ChangeEvent<HTMLInputElement>) =>
                             setGoToPage(parseInt(val.target.value))
                         }
