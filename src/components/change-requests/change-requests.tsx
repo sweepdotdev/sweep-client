@@ -7,6 +7,7 @@ import { getAllChangeRequests } from "@/requests/change-requests/get-change-requ
 import { Button } from "@/components/ui/button.tsx";
 import { DataTable } from "@/components/change-requests/table/data-table";
 import { ChangeRequest, columns } from "@/components/change-requests/table/columns";
+import { AxiosResponse } from "axios";
 
 export interface ChangeRequestPayload {
     id: string;
@@ -62,8 +63,12 @@ export default function ChangeRequests(): ReactElement {
     const [totalPages, setTotalPages] = useState<number>(0);
 
     const changeRequestQuery = useQuery({
-        queryKey: ["getChangeLogs"],
-        queryFn: getAllChangeRequests,
+        queryKey: ["getChangeLogs", pagination],
+        queryFn: async (): Promise<AxiosResponse> =>
+            await getAllChangeRequests({
+                page: pagination.pageIndex + 1,
+                pageSize: pagination.pageSize,
+            }),
     });
     const [data, setData] = useState<ChangeRequestPayload[] | null>(null);
     const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>([blankChangeRequest]);
@@ -84,6 +89,7 @@ export default function ChangeRequests(): ReactElement {
 
     useEffect(() => {
         if (changeRequestQuery.isSuccess && data) {
+            const mockArray: ChangeRequest[] = [];
             for (let i = 0; i < data.length; i++) {
                 const changeRequest: ChangeRequest = {
                     id: data[i].id,
@@ -98,8 +104,9 @@ export default function ChangeRequests(): ReactElement {
                     status: data[i].status,
                     createdAt: new Date(data[i].created_at),
                 };
-                setChangeRequests([changeRequest]);
+                mockArray.push(changeRequest);
             }
+            setChangeRequests(mockArray);
         }
     }, [data]);
 
