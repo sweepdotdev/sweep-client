@@ -33,15 +33,15 @@ import {
 import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DataTablePagination } from "@/components/change-requests/table/pagination";
-import { Pagination } from "@/components/change-requests/ChangeRequests";
+import { Pagination } from "@/components/change-requests/change-requests";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    pagination: Pagination;
-    setPagination: Dispatch<SetStateAction<Pagination>>;
-    totalPages: number;
-    setTotalPages: Dispatch<SetStateAction<number>>;
+    pagination?: Pagination;
+    setPagination?: Dispatch<SetStateAction<Pagination>>;
+    totalPages?: number;
+    setTotalPages?: Dispatch<SetStateAction<number>>;
 }
 
 export function DataTable<TData, TValue>({
@@ -163,14 +163,18 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
 
-            <div className={"mt-4"}>
-                <DataTablePagination
-                    table={table}
-                    pagination={pagination}
-                    setPagination={setPagination}
-                    pageCount={totalPages}
-                />
-            </div>
+            {pagination && setPagination && totalPages ? (
+                <div className={"mt-4"}>
+                    <DataTablePagination
+                        table={table}
+                        pagination={pagination}
+                        setPagination={setPagination}
+                        pageCount={totalPages}
+                    />
+                </div>
+            ) : (
+                <></>
+            )}
         </div>
     );
 }
