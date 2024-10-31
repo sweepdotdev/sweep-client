@@ -165,12 +165,7 @@ export function DataTable<TData, TValue>({
 
             {pagination && setPagination && totalPages ? (
                 <div className={"mt-4"}>
-                    <DataTablePagination
-                        table={table}
-                        pagination={pagination}
-                        setPagination={setPagination}
-                        pageCount={totalPages}
-                    />
+                    <DataTablePagination table={table} pageCount={totalPages} />
                 </div>
             ) : (
                 <></>
