@@ -15,34 +15,24 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Check } from "lucide-react";
-import { Pagination } from "@/components/change-requests/change-requests";
 import { Label } from "@/components/ui/label";
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
-    pagination: Pagination;
-    setPagination: Dispatch<SetStateAction<Pagination>>;
     pageCount: number;
 }
 
-export function DataTablePagination<TData>({
-    table,
-    pageCount,
-    pagination,
-    setPagination,
-}: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({ table, pageCount }: DataTablePaginationProps<TData>) {
     const [goToPage, setGoToPage] = useState<number>(1);
 
     function handlePageSubmission() {
         if (goToPage > pageCount) {
             return;
         }
-        setPagination({
-            pageSize: pagination.pageSize,
-            pageIndex: goToPage - 1,
-        });
+
+        table.setPageIndex(goToPage - 1);
     }
     return (
         <div className="flex items-center justify-between px-2">
