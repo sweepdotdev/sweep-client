@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button.tsx";
 import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { AxiosResponse } from "axios";
 
 interface InviteCode {
     id: string;
@@ -25,14 +27,18 @@ interface InviteCode {
 }
 
 export default function UserInfo(): ReactElement {
-    const { organization, email, lastName, firstName } = useStoreInContext((state) =>
+    const { organization, email, lastName, firstName, loggedIn } = useStoreInContext((state) =>
         state.getState(),
     );
-    const [loaded, setLoaded] = useState<boolean>(false);
+    const redirect: NavigateFunction = useNavigate();
+
+    useEffect(() => {
+        if (!loggedIn) redirect("/login");
+    }, [loggedIn]);
 
     const inviteCodeQuery = useQuery({
         queryKey: ["inviteCode", organization],
-        queryFn: async () => {
+        queryFn: async (): Promise<AxiosResponse> => {
             return await getInviteCode({ organizationId: organization });
         },
     });
@@ -44,18 +50,10 @@ export default function UserInfo(): ReactElement {
     const { toast } = useToast();
 
     useEffect(() => {
-        if (!loaded) {
-            setLoaded(true);
+        if (inviteCodeQuery.data?.data) {
+            setInviteCode(inviteCodeQuery.data?.data);
         }
-    }, []);
-
-    useEffect(() => {
-        if (loaded) {
-            if (inviteCodeQuery.data?.data) {
-                setInviteCode(inviteCodeQuery.data?.data);
-            }
-        }
-    }, [loaded]);
+    }, [inviteCodeQuery.data]);
 
     async function copyToClipboard() {
         try {
