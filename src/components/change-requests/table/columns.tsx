@@ -21,16 +21,21 @@ export type ChangeRequest = {
     createdAt: Date;
 };
 
-export function determineStatusColor(status: string): string {
+interface ColorDetermination {
+    textColor: string;
+    bgColor: string;
+}
+
+export function determineStatusColor(status: string): ColorDetermination {
     switch (status) {
         case "pending":
-            return "text-orange-500";
+            return { textColor: "text-orange-500", bgColor: "bg-orange-200" };
         case "in_progress":
-            return "text-yellow-500";
+            return { textColor: "text-yellow-500", bgColor: "bg-yellow-200" };
         case "completed":
-            return "text-green-500";
+            return { textColor: "text-green-500", bgColor: "bg-green-200" };
         default:
-            return "text-orange-500";
+            return { textColor: "text-orange-500", bgColor: "bg-orange-200" };
     }
 }
 
@@ -117,27 +122,49 @@ export const columns: ColumnDef<ChangeRequest>[] = [
         accessorKey: "customPullRequestTitle",
         header: ({ column }) => {
             return (
-                <Button variant={"ghost"} onClick={() => column.getIsSorted() === "asc"}>
+                <Button
+                    variant={"ghost"}
+                    onClick={() => column.getIsSorted() === "asc"}
+                    className={"flex justify-center items-center w-full"}
+                >
                     Pull Request Title
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
+        cell: ({ row }) => {
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <p>{row.getValue("customPullRequestTitle")}</p>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "status",
-        header: "Status",
+        header: () => <div className={"flex justify-center items-center"}>Status</div>,
         cell: ({ row }): ReactElement => {
             const status: string = row.getValue("status");
             const modifiedStatus: string = status.charAt(0).toUpperCase() + status.slice(1);
-            return <div className={`${determineStatusColor(status)}`}>{modifiedStatus}</div>;
+            const { bgColor, textColor } = determineStatusColor(status);
+            return (
+                <div
+                    className={`${bgColor} flex justify-center items-center ${textColor} p-2 rounded-md`}
+                >
+                    {modifiedStatus}
+                </div>
+            );
         },
     },
     {
         accessorKey: "createdAt",
         header: ({ column }) => {
             return (
-                <Button variant={"ghost"} onClick={() => column.getIsSorted() === "asc"}>
+                <Button
+                    variant={"ghost"}
+                    onClick={() => column.getIsSorted() === "asc"}
+                    className={"flex justify-center items-center w-full"}
+                >
                     Creation Date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -152,7 +179,7 @@ export const columns: ColumnDef<ChangeRequest>[] = [
             const modifiedTime: string = format(rawDate, "pp");
             return (
                 <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger className={"flex justify-center items-center w-full"}>
                         <div>{modifiedDate}</div>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -164,10 +191,10 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "dryRun",
-        header: "Dry Run",
+        header: () => <div className={"flex justify-center items-center w-full"}>Dry Run</div>,
         cell: ({ row }) => {
             return (
-                <div className={"flex justify-between items-center"}>
+                <div className={"flex justify-center items-center"}>
                     <Checkbox
                         aria-readonly
                         checked={row.getValue("dryRun")}
@@ -179,9 +206,13 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "actions",
-        header: "Actions",
+        header: () => <div className={"flex justify-center items-center w-full"}>Actions</div>,
         cell: ({ row }) => {
-            return <RedirectButton id={row.original.id} />;
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <RedirectButton id={row.original.id} />
+                </div>
+            );
         },
     },
 ];
