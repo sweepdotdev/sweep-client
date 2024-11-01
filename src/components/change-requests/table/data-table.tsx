@@ -12,8 +12,6 @@ import {
     Cell,
 } from "@tanstack/react-table";
 
-import type { Table as TanstackTable } from "@tanstack/react-table";
-
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -34,6 +32,7 @@ import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DataTablePagination } from "@/components/change-requests/table/pagination";
 import { Pagination } from "@/components/change-requests/change-requests";
+import type { Table as TanstackTable } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
