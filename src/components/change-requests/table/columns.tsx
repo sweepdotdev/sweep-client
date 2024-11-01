@@ -92,10 +92,26 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     {
         accessorKey: "customBranchName",
         header: () => <div className={"flex justify-center items-center"}>Branch Name</div>,
+        cell: ({ row }) => {
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <p>{row.getValue("customBranchName")}</p>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "customCommitMessage",
-        header: "Commit Message",
+        header: () => <div className={"flex justify-center items-center"}>Commit Message</div>,
+        cell: ({ row }) => {
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <p>
+                        <em>"{row.getValue("customCommitMessage")}"</em>
+                    </p>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "customPullRequestTitle",
