@@ -31,6 +31,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import useUploadAvatar from "@/requests/user/use-upload-avatar";
 
 interface InviteCode {
     id: string;
@@ -53,9 +54,12 @@ export default function UserInfo(): ReactElement {
         resolver: zodResolver(UploadPictureSchema),
     });
     const fileRef = form.register("profileImage");
+    const uploadPhotoMutation = useUploadAvatar();
 
     async function onSubmit(values: z.infer<typeof UploadPictureSchema>): Promise<void> {
-        console.log(values);
+        const res: AxiosResponse = await uploadPhotoMutation.mutateAsync({
+            file: values.profileImage[0],
+        });
     }
 
     const inviteCodeQuery = useQuery({
