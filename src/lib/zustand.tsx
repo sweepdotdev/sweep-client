@@ -11,6 +11,7 @@ export interface SessionState {
     organization: string;
     stripeClientSecret?: string;
     hasOAuth2Credentials?: boolean;
+    avatarUrl: string;
     sub: string;
     iss: string;
 }
@@ -22,6 +23,7 @@ export interface SessionActions {
     setState: (val: SessionState) => void;
     setHasOAuth2Credentials: () => void;
     setClientSecret: (clientSecret: string) => void;
+    setAvatarUrl: (avatarUrl: string) => void;
 }
 
 const StoreContext: Context<StoreApi<SessionState & SessionActions> | null> =
@@ -44,6 +46,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     iss: "",
                     stripeClientSecret: undefined,
                     hasOAuth2Credentials: false,
+                    avatarUrl: "",
                     setState: (val: SessionState) =>
                         set((state: SessionState) => Object.assign(state, val)),
                     setExpiry: (value: Date) => set(() => ({ expires: value })),
@@ -62,6 +65,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     setClientSecret: (clientSecret: string) => ({
                         stripeClientSecret: clientSecret,
                     }),
+                    setAvatarUrl: (avatarUrl: string) => set(() => ({ avatarUrl: avatarUrl })),
                 }),
                 {
                     name: "sweep-storage",
