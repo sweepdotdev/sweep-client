@@ -18,6 +18,19 @@ import { useToast } from "@/hooks/use-toast.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { UploadPictureSchema } from "@/schemas/upload-picture";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 
 interface InviteCode {
     id: string;
@@ -27,14 +40,23 @@ interface InviteCode {
 }
 
 export default function UserInfo(): ReactElement {
-    const { organization, email, lastName, firstName, loggedIn } = useStoreInContext((state) =>
-        state.getState(),
+    const { organization, email, lastName, firstName, loggedIn, avatarUrl } = useStoreInContext(
+        (state) => state.getState(),
     );
     const redirect: NavigateFunction = useNavigate();
 
     useEffect(() => {
         if (!loggedIn) redirect("/login");
     }, [loggedIn]);
+
+    const form = useForm<z.infer<typeof UploadPictureSchema>>({
+        resolver: zodResolver(UploadPictureSchema),
+    });
+    const fileRef = form.register("profileImage");
+
+    async function onSubmit(values: z.infer<typeof UploadPictureSchema>): Promise<void> {
+        console.log(values);
+    }
 
     const inviteCodeQuery = useQuery({
         queryKey: ["inviteCode", organization],
@@ -79,7 +101,17 @@ export default function UserInfo(): ReactElement {
         <div className={"h-full w-full flex items-center justify-center"}>
             <Card className={"shadow-2xl"}>
                 <CardHeader>
-                    <CardTitle>User Information</CardTitle>
+                    <div>
+                        {avatarUrl ? (
+                            <Avatar>
+                                <AvatarImage src={avatarUrl!} />
+                            </Avatar>
+                        ) : (
+                            <></>
+                        )}
+
+                        <CardTitle>User Information</CardTitle>
+                    </div>
                     <CardDescription>
                         Below is your basic user information you entered while signing up.
                     </CardDescription>
@@ -97,6 +129,7 @@ export default function UserInfo(): ReactElement {
                         <Label htmlFor={"email"}>Email</Label>
                         <Input id={"email"} value={email} readOnly />
                     </div>
+
                     {orgInvitations[0].invite_code ? (
                         <div>
                             <Label htmlFor={"inviteCode"}>Invite Code</Label>
@@ -117,6 +150,43 @@ export default function UserInfo(): ReactElement {
                                         <span>Copy to Clipboard</span>
                                     </TooltipContent>
                                 </Tooltip>
+                            </div>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
+
+                    {!avatarUrl ? (
+                        <div>
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} id={"profilePicture"}>
+                                    <FormField
+                                        control={form.control}
+                                        name={"profileImage"}
+                                        render={({}) => (
+                                            <FormItem>
+                                                <div className={"flex justify-between"}>
+                                                    <FormLabel htmlFor={"fileUpload"}>
+                                                        Upload Profile Picture
+                                                    </FormLabel>
+                                                    <FormMessage />
+                                                </div>
+                                                <FormControl>
+                                                    <Input
+                                                        id={"fileUpload"}
+                                                        type={"file"}
+                                                        {...fileRef}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </form>
+                            </Form>
+                            <div className={"w-full flex justify-end"}>
+                                <Button form={"profilePicture"} className={"mt-2"} type={"submit"}>
+                                    Upload Picture
+                                </Button>
                             </div>
                         </div>
                     ) : (
