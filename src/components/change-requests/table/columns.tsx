@@ -37,17 +37,45 @@ export function determineStatusColor(status: string): string {
 export const columns: ColumnDef<ChangeRequest>[] = [
     {
         accessorKey: "packageManager",
-        header: "Package Manager",
+        header: (): ReactElement => (
+            <div className={"flex justify-center items-center"}>
+                <p>Package Manager</p>
+            </div>
+        ),
+        cell: ({ row }) => {
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <pre className={"p-2 bg-muted rounded-md"}>
+                        {row.getValue("packageManager")}
+                    </pre>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "packageManagerVersion",
-        header: "Package Manager Version",
+        header: () => (
+            <div className={"flex justify-center items-center"}>Package Manager Version</div>
+        ),
+        cell: ({ row }) => {
+            return (
+                <div className={"flex justify-center items-center"}>
+                    <pre className={"p-2 bg-muted rounded-md"}>
+                        {row.getValue("packageManagerVersion")}
+                    </pre>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "command",
         header: ({ column }) => {
             return (
-                <Button variant={"ghost"} onClick={(): boolean => column.getIsSorted() === "asc"}>
+                <Button
+                    variant={"ghost"}
+                    onClick={(): boolean => column.getIsSorted() === "asc"}
+                    className={"flex justify-center items-center w-full"}
+                >
                     Sweep Command
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -63,7 +91,7 @@ export const columns: ColumnDef<ChangeRequest>[] = [
     },
     {
         accessorKey: "customBranchName",
-        header: "Branch Name",
+        header: () => <div className={"flex justify-center items-center"}>Branch Name</div>,
     },
     {
         accessorKey: "customCommitMessage",
