@@ -54,6 +54,11 @@ export default function GlobalSearch(): ReactElement {
         return () => window.removeEventListener("keydown", down);
     }, []);
 
+    function handleSelection(route: string): void {
+        setOpen(false);
+        redirect(route);
+    }
+
     return (
         <>
             <Button
@@ -77,12 +82,18 @@ export default function GlobalSearch(): ReactElement {
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>
                     <CommandGroup heading={"General"}>
-                        <CommandItem onSelect={() => redirect("/")}>
+                        <CommandItem
+                            className={"cursor-pointer"}
+                            onSelect={() => handleSelection("/")}
+                        >
                             <Home className={"mr-3"} />
                             <span>Home</span>
                             <CommandShortcut>⌃M</CommandShortcut>
                         </CommandItem>
-                        <CommandItem onSelect={() => redirect("/user-info")}>
+                        <CommandItem
+                            className={"cursor-pointer"}
+                            onSelect={() => handleSelection("/user-info")}
+                        >
                             <UserCircle className={"mr-3"} />
                             <span>User Information</span>
                             <CommandShortcut>⌘U</CommandShortcut>
@@ -90,12 +101,18 @@ export default function GlobalSearch(): ReactElement {
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading={"Change Requests"}>
-                        <CommandItem onSelect={() => redirect("/change-requests")}>
+                        <CommandItem
+                            className={"cursor-pointer"}
+                            onSelect={() => handleSelection("/change-requests")}
+                        >
                             <GitPullRequest className={"mr-3"} />
                             <span>Change Requests</span>
                             <CommandShortcut>⌘C</CommandShortcut>
                         </CommandItem>
-                        <CommandItem onSelect={() => redirect("/change-requests/create")}>
+                        <CommandItem
+                            className={"cursor-pointer"}
+                            onSelect={() => handleSelection("/change-requests/create")}
+                        >
                             <GitPullRequestCreate className={"mr-3"} />
                             <span>Create Change Request</span>
                             <CommandShortcut>⌃+</CommandShortcut>
@@ -103,7 +120,10 @@ export default function GlobalSearch(): ReactElement {
                     </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup>
-                        <CommandItem onSelect={() => redirect("/billing")}>
+                        <CommandItem
+                            className={"cursor-pointer"}
+                            onSelect={() => handleSelection("/billing")}
+                        >
                             <DollarSign className={"mr-3"} />
                             <span>Billing & Subscriptions</span>
                             <CommandShortcut>⌃B</CommandShortcut>
