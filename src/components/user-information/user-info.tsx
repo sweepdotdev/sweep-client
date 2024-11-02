@@ -18,8 +18,8 @@ import { useToast } from "@/hooks/use-toast.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useForm } from "react-hook-form";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { z } from "zod";
 import { UploadPictureSchema } from "@/schemas/upload-picture";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import useUploadAvatar from "@/requests/user/use-upload-avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface InviteCode {
     id: string;
@@ -44,6 +45,7 @@ export default function UserInfo(): ReactElement {
     const { organization, email, lastName, firstName, loggedIn, avatarUrl } = useStoreInContext(
         (state) => state.getState(),
     );
+    const setAvatarUrl = useStoreInContext((state) => state.setAvatarUrl);
     const redirect: NavigateFunction = useNavigate();
 
     useEffect(() => {
@@ -53,13 +55,17 @@ export default function UserInfo(): ReactElement {
     const form = useForm<z.infer<typeof UploadPictureSchema>>({
         resolver: zodResolver(UploadPictureSchema),
     });
-    const fileRef = form.register("profileImage");
+    const fileRef: UseFormRegisterReturn<"profileImage"> = form.register("profileImage");
     const uploadPhotoMutation = useUploadAvatar();
 
     async function onSubmit(values: z.infer<typeof UploadPictureSchema>): Promise<void> {
         const res: AxiosResponse = await uploadPhotoMutation.mutateAsync({
             file: values.profileImage[0],
         });
+
+        if (res.status === 200) {
+            setAvatarUrl(res.data[0]);
+        }
     }
 
     const inviteCodeQuery = useQuery({
@@ -105,20 +111,27 @@ export default function UserInfo(): ReactElement {
         <div className={"h-full w-full flex items-center justify-center"}>
             <Card className={"shadow-2xl"}>
                 <CardHeader>
-                    <div>
-                        {avatarUrl ? (
-                            <Avatar>
-                                <AvatarImage src={avatarUrl!} />
-                            </Avatar>
-                        ) : (
-                            <></>
-                        )}
+                    <div className={"flex space-x-4"}>
+                        <div>
+                            {avatarUrl ? (
+                                <Avatar>
+                                    <AvatarImage src={avatarUrl!} />
+                                    <AvatarFallback>
+                                        <Skeleton className={"h-8 w-8 rounded-full"} />
+                                    </AvatarFallback>
+                                </Avatar>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
 
-                        <CardTitle>User Information</CardTitle>
+                        <div>
+                            <CardTitle>User Information</CardTitle>
+                            <CardDescription>
+                                Below is your basic user information you entered while signing up.
+                            </CardDescription>
+                        </div>
                     </div>
-                    <CardDescription>
-                        Below is your basic user information you entered while signing up.
-                    </CardDescription>
                 </CardHeader>
                 <CardContent className={"space-y-2"}>
                     <div>
@@ -179,6 +192,7 @@ export default function UserInfo(): ReactElement {
                                                     <Input
                                                         id={"fileUpload"}
                                                         type={"file"}
+                                                        className={"cursor-pointer"}
                                                         {...fileRef}
                                                     />
                                                 </FormControl>
