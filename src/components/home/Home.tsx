@@ -18,8 +18,6 @@ export default function Home(): ReactElement {
         (state) => state.hasOAuth2Credentials,
     );
 
-    // balls
-
     useEffect(() => {
         if (!loggedIn) {
             redirect("/login");
