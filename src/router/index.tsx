@@ -10,6 +10,7 @@ import ChangeRequests from "@/components/change-requests/change-requests.tsx";
 import CreateChangeRequests from "@/components/change-requests/change-request/create-change-requests.tsx";
 import Billing from "@/components/billing/Billing";
 import ChangeRequest from "@/components/change-requests/change-request/change-request";
+import OrganizationMembers from "@/components/organization/members/organization-members";
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
             {
                 path: "/billing",
                 element: <Billing />,
+            },
+            {
+                path: "/organization/members",
+                element: <OrganizationMembers />,
             },
         ],
     },
