@@ -1,8 +1,9 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useStoreInContext } from "@/lib/zustand";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getUsersByOrganizationId } from "@/requests/users/users-by-org-id";
+import { AxiosResponse } from "axios";
 
 export default function OrganizationMembers(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -14,13 +15,17 @@ export default function OrganizationMembers(): ReactElement {
     }
 
     const membersQuery = useQuery({
-        queryKey: ["org-members", organizationId],
-        queryFn: async () => await getUsersByOrganizationId({ organizationId }),
+        queryKey: ["org-members", { organizationId: organizationId }],
+        queryFn: async (): Promise<AxiosResponse> =>
+            await getUsersByOrganizationId({ organizationId }),
+        staleTime: Infinity,
     });
 
-    if (membersQuery.isSuccess) {
-        console.log(membersQuery.data);
-    }
+    useEffect(() => {
+        if (membersQuery.isSuccess) {
+            console.log(membersQuery);
+        }
+    }, [membersQuery.data]);
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
