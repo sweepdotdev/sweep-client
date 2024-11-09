@@ -45,6 +45,14 @@ export default function CommandK(): ReactElement {
                 redirect("/billing");
             }
 
+            if (e.key === "O" && e.shiftKey && e.ctrlKey) {
+                redirect("/organization");
+            }
+
+            if (e.key === "o" && e.ctrlKey) {
+                redirect("/organization/members");
+            }
+
             if (e.key === "Enter") {
                 setOpen(false);
             }
