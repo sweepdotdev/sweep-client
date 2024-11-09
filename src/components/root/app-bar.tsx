@@ -3,7 +3,7 @@ import { Compass } from "lucide-react";
 import { ModeToggle } from "@/components/root/mode-toggle.tsx";
 import { useStoreInContext } from "@/lib/zustand.tsx";
 import { SidebarTrigger } from "@/components/ui/sidebar.tsx";
-import GlobalSearch from "@/components/root/global-search";
+import CommandK from "@/components/root/command-k/command-k";
 
 export default function AppBar(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
@@ -32,7 +32,7 @@ export default function AppBar(): ReactElement {
                     <></>
                 )}
 
-                {authenticated ? <GlobalSearch /> : null}
+                {authenticated ? <CommandK /> : null}
 
                 <ModeToggle />
             </div>
