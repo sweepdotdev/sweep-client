@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { useStoreInContext } from "@/lib/zustand";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getUsersByOrganizationId } from "@/requests/users/users-by-org-id";
+import { getUsersByOrganizationId } from "@/requests/organization/get-members";
 import { AxiosResponse } from "axios";
 
 export default function OrganizationMembers(): ReactElement {
