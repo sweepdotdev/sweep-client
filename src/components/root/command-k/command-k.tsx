@@ -93,7 +93,7 @@ export default function CommandK(): ReactElement {
                     <CommandGroup>
                         {searchItems.map(
                             (item: SearchItem): ReactElement => (
-                                <>
+                                <div key={item.route}>
                                     <CommandItem
                                         className={"cursor-pointer"}
                                         onSelect={() => handleSelection(item.route)}
@@ -103,7 +103,7 @@ export default function CommandK(): ReactElement {
                                         <CommandShortcut>{item.shortcut}</CommandShortcut>
                                     </CommandItem>
                                     {item.separator ? <CommandSeparator /> : <></>}
-                                </>
+                                </div>
                             ),
                         )}
                     </CommandGroup>
