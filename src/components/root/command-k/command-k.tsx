@@ -9,12 +9,13 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "@/components/ui/command";
-import { DollarSign, GitPullRequest, GitPullRequestCreate, Home, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { searchItems } from "@/components/root/command-k/search-items";
+import { SearchItem } from "@/components/root/command-k/search-item";
 
-export default function GlobalSearch(): ReactElement {
+export default function CommandK(): ReactElement {
     const [open, setOpen] = useState<boolean>(false);
     const redirect: NavigateFunction = useNavigate();
 
@@ -81,53 +82,22 @@ export default function GlobalSearch(): ReactElement {
 
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup heading={"General"}>
-                        <CommandItem
-                            className={"cursor-pointer"}
-                            onSelect={() => handleSelection("/")}
-                        >
-                            <Home className={"mr-3"} />
-                            <span>Home</span>
-                            <CommandShortcut>⌃M</CommandShortcut>
-                        </CommandItem>
-                        <CommandItem
-                            className={"cursor-pointer"}
-                            onSelect={() => handleSelection("/user-info")}
-                        >
-                            <UserCircle className={"mr-3"} />
-                            <span>User Information</span>
-                            <CommandShortcut>⌘U</CommandShortcut>
-                        </CommandItem>
-                    </CommandGroup>
-                    <CommandSeparator />
-                    <CommandGroup heading={"Change Requests"}>
-                        <CommandItem
-                            className={"cursor-pointer"}
-                            onSelect={() => handleSelection("/change-requests")}
-                        >
-                            <GitPullRequest className={"mr-3"} />
-                            <span>Change Requests</span>
-                            <CommandShortcut>⌘C</CommandShortcut>
-                        </CommandItem>
-                        <CommandItem
-                            className={"cursor-pointer"}
-                            onSelect={() => handleSelection("/change-requests/create")}
-                        >
-                            <GitPullRequestCreate className={"mr-3"} />
-                            <span>Create Change Request</span>
-                            <CommandShortcut>⌃+</CommandShortcut>
-                        </CommandItem>
-                    </CommandGroup>
-                    <CommandSeparator />
                     <CommandGroup>
-                        <CommandItem
-                            className={"cursor-pointer"}
-                            onSelect={() => handleSelection("/billing")}
-                        >
-                            <DollarSign className={"mr-3"} />
-                            <span>Billing & Subscriptions</span>
-                            <CommandShortcut>⌃B</CommandShortcut>
-                        </CommandItem>
+                        {searchItems.map(
+                            (item: SearchItem): ReactElement => (
+                                <>
+                                    <CommandItem
+                                        className={"cursor-pointer"}
+                                        onSelect={() => handleSelection(item.route)}
+                                    >
+                                        <div className={"mr-3"}>{item.icon}</div>
+                                        <span>{item.text}</span>
+                                        <CommandShortcut>{item.shortcut}</CommandShortcut>
+                                    </CommandItem>
+                                    {item.separator ? <CommandSeparator /> : <></>}
+                                </>
+                            ),
+                        )}
                     </CommandGroup>
                 </CommandList>
             </CommandDialog>
