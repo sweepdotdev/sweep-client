@@ -1,4 +1,12 @@
-import { DollarSign, GitPullRequest, GitPullRequestCreate, Home, UserCircle } from "lucide-react";
+import {
+    Building,
+    DollarSign,
+    GitPullRequest,
+    GitPullRequestCreate,
+    Home,
+    UserCircle,
+    Users,
+} from "lucide-react";
 import { SearchItem } from "@/components/root/command-k/search-item";
 
 export const searchItems: SearchItem[] = [
@@ -13,6 +21,19 @@ export const searchItems: SearchItem[] = [
         text: "User Information",
         shortcut: "⌘U",
         icon: <UserCircle />,
+        separator: true,
+    },
+    {
+        route: "/organization",
+        text: "Organization Information",
+        shortcut: "shift ⌃ O",
+        icon: <Building />,
+    },
+    {
+        route: "/organization/members",
+        text: "Organization Members",
+        shortcut: "⌃O",
+        icon: <Users />,
         separator: true,
     },
     {
