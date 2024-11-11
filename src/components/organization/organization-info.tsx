@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { AxiosResponse } from "axios";
 
 export default function OrganizationInfo(): ReactElement {
     const redirect: NavigateFunction = useNavigate();
@@ -31,7 +32,7 @@ export default function OrganizationInfo(): ReactElement {
 
     const organizationRequest = useQuery({
         queryKey: ["org-info", { organizationId: organizationId }],
-        queryFn: async () => await getOrganizationById({ organizationId }),
+        queryFn: async (): Promise<AxiosResponse> => await getOrganizationById({ organizationId }),
     });
 
     return (
@@ -48,24 +49,30 @@ export default function OrganizationInfo(): ReactElement {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className={"space-y-3"}>
-                        <div>
-                            <Label htmlFor={"org-name"}>Organization Name</Label>
-                            <Input
-                                id={"org-name"}
-                                value={organizationRequest.data?.data.organization_name}
-                                readOnly
-                            />
-                        </div>
-                        <div>
-                            <Label htmlFor={"org-creation-date"}>Date Created</Label>
-                            <Input
-                                value={format(
-                                    new Date(organizationRequest.data?.data.created_at),
-                                    "PPPP @ ppp",
-                                )}
-                                readOnly
-                            />
-                        </div>
+                        {organizationRequest.data ? (
+                            <div>
+                                <div>
+                                    <Label htmlFor={"org-name"}>Organization Name</Label>
+                                    <Input
+                                        id={"org-name"}
+                                        value={organizationRequest.data.data.organization_name}
+                                        readOnly
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor={"org-creation-date"}>Date Created</Label>
+                                    <Input
+                                        value={format(
+                                            new Date(organizationRequest.data.data.created_at),
+                                            "PPPP",
+                                        )}
+                                        readOnly
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <span>No Data Available</span>
+                        )}
                     </CardContent>
                     <CardFooter>
                         <div className={"w-full flex justify-end items-center"}>
