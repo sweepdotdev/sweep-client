@@ -6,45 +6,12 @@ import { Loader } from "lucide-react";
 import { getAllChangeRequests } from "@/requests/change-requests/get-change-requests.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { DataTable } from "@/components/change-requests/table/data-table";
-import { ChangeRequest, columns } from "@/components/change-requests/table/columns";
+import { columns } from "@/components/change-requests/table/columns";
 import { AxiosResponse } from "axios";
-
-export interface ChangeRequestPayload {
-    id: string;
-    initiator_account_id: string;
-    num_jobs_enqueued: number;
-    organization_id: string;
-    status: "pending" | "in_progress" | "completed";
-    created_at: string;
-    last_updated_at: string;
-    package_manager_software: string;
-    package_manager_version: string;
-    command: string;
-    eligible_git_namespaces: string[];
-    custom_branch_name: string;
-    custom_commit_message: string;
-    custom_pull_request_title: string;
-    dry_run: boolean;
-}
-
-export interface Pagination {
-    pageIndex: number;
-    pageSize: number;
-}
-
-export const blankChangeRequest: ChangeRequest = {
-    id: "",
-    packageManager: "",
-    packageManagerVersion: "",
-    command: "",
-    eligibleGitNamespaces: [""],
-    customBranchName: "",
-    customCommitMessage: "",
-    customPullRequestTitle: "",
-    dryRun: false,
-    status: "pending",
-    createdAt: new Date(),
-};
+import { ChangeRequestPayload } from "@/models/change-requests/change-request/change-request-payload";
+import { ChangeRequest } from "@/models/change-requests/change-request/change-request";
+import { blankChangeRequest } from "@/models/change-requests/change-request/blank-change-request";
+import { Pagination } from "@/models/data-table/pagination";
 
 export default function ChangeRequests(): ReactElement {
     const loggedIn: boolean = useStoreInContext((state) => state.loggedIn);
