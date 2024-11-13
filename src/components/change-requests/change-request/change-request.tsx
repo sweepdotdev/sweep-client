@@ -78,7 +78,7 @@ export default function ChangeRequest(): ReactElement {
                 }
             }
         }
-    }, [getAllJobsQuery.data, getAllJobsQuery.isSuccess]);
+    }, [getAllJobsQuery.data, getAllJobsQuery.isSuccess, jobs]);
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
