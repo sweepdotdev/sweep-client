@@ -50,7 +50,7 @@ export default function UserInfo(): ReactElement {
 
     useEffect(() => {
         if (!loggedIn) redirect("/login");
-    }, [loggedIn]);
+    }, [loggedIn, redirect]);
 
     const form = useForm<z.infer<typeof UploadPictureSchema>>({
         resolver: zodResolver(UploadPictureSchema),
@@ -180,7 +180,7 @@ export default function UserInfo(): ReactElement {
                                     <FormField
                                         control={form.control}
                                         name={"profileImage"}
-                                        render={({}) => (
+                                        render={() => (
                                             <FormItem>
                                                 <div className={"flex justify-between"}>
                                                     <FormLabel htmlFor={"fileUpload"}>
