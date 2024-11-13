@@ -98,7 +98,7 @@ export default function CommandK(): ReactElement {
                                         className={"cursor-pointer"}
                                         onSelect={() => handleSelection(item.route)}
                                     >
-                                        <div className={"mr-3"}>{item.icon}</div>
+                                        <item.icon className={"mr-3"} />
                                         <span>{item.text}</span>
                                         <CommandShortcut>{item.shortcut}</CommandShortcut>
                                     </CommandItem>
