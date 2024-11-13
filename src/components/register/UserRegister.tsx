@@ -30,6 +30,7 @@ import useRegisterUser from "@/requests/register/use-register.tsx";
 import Cookies from "js-cookie";
 
 export interface StatePayload {
+    avatarUrl: string;
     loggedIn: boolean;
     firstName: string;
     lastName: string;
@@ -91,6 +92,7 @@ export default function UserRegister(): ReactElement {
             const { payload } = await verifyJWT(idToken);
 
             setState({
+                avatarUrl: "",
                 loggedIn: true,
                 firstName: payload.first_name,
                 lastName: payload.last_name,
