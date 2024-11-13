@@ -25,5 +25,7 @@ export async function verifyJWT(idCookie: string): Promise<JWTVerifyResult> {
 export function generateCSRFToken(): string {
     // TODO: is there a preferrable way to do this on the client?
     // TODO: should this responsibility be moved to the backend?
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return (
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    );
 }
