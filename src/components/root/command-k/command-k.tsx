@@ -61,7 +61,7 @@ export default function CommandK(): ReactElement {
         window.addEventListener("keydown", down);
 
         return () => window.removeEventListener("keydown", down);
-    }, []);
+    }, [redirect]);
 
     function handleSelection(route: string): void {
         setOpen(false);
