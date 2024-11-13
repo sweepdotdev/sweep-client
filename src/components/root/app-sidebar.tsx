@@ -11,9 +11,18 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import UserDropdown from "@/components/root/user-dropdown.tsx";
-import { Home, GitPullRequestCreate, LucideProps, GitPullRequest } from "lucide-react";
+import {
+    Home,
+    GitPullRequestCreate,
+    LucideProps,
+    GitPullRequest,
+    CircleUser,
+    Building,
+    Users,
+    DollarSign,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import UserDropdown from "@/components/root/user-dropdown.tsx";
 
 interface NavItem {
     title: string;
@@ -39,6 +48,21 @@ export function AppSidebar(): ReactElement {
             icon: Home,
         },
         {
+            title: "User Information",
+            url: "/user-info",
+            icon: CircleUser,
+        },
+        {
+            title: "Organization Information",
+            url: "/organization",
+            icon: Building,
+        },
+        {
+            title: "Organization Members",
+            url: "/organization/members",
+            icon: Users,
+        },
+        {
             title: "Change Requests",
             url: "/change-requests",
             icon: GitPullRequest,
@@ -47,6 +71,11 @@ export function AppSidebar(): ReactElement {
             title: "Create Change Request",
             url: "/change-requests/create",
             icon: GitPullRequestCreate,
+        },
+        {
+            title: "Billing",
+            url: "/billing",
+            icon: DollarSign,
         },
     ];
 
@@ -60,7 +89,7 @@ export function AppSidebar(): ReactElement {
                             {items.map((item: NavItem) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <a className={"text-black"} href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </a>
