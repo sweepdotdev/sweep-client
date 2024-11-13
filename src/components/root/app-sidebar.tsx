@@ -39,7 +39,7 @@ export function AppSidebar(): ReactElement {
                 setOpen(false);
             }
         });
-    }, []);
+    }, [setOpen]);
 
     const items: NavItem[] = [
         {
