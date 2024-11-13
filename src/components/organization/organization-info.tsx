@@ -26,7 +26,7 @@ export default function OrganizationInfo(): ReactElement {
         if (!loggedIn) {
             redirect("/login");
         }
-    }, []);
+    }, [loggedIn, redirect]);
 
     const organizationId: string = useStoreInContext((state) => state.organization);
 
