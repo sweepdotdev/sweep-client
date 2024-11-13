@@ -89,7 +89,7 @@ export function AppSidebar(): ReactElement {
                             {items.map((item: NavItem) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a className={"text-black"} href={item.url}>
+                                        <a className={"dark:text-white text-black"} href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </a>
