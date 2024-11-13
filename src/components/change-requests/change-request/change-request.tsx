@@ -42,13 +42,13 @@ export default function ChangeRequest(): ReactElement {
 
     useEffect(() => {
         if (!id) redirect("/change-requests");
-    }, [id]);
+    }, [id, redirect]);
 
     useEffect(() => {
         if (!loggedIn) {
             redirect("/login");
         }
-    }, [loggedIn]);
+    }, [loggedIn, redirect]);
 
     const getAllJobsQuery = useQuery({
         queryKey: ["getAllJobs", id!],
@@ -78,7 +78,7 @@ export default function ChangeRequest(): ReactElement {
                 }
             }
         }
-    }, [getAllJobsQuery.data]);
+    }, [getAllJobsQuery.data, getAllJobsQuery.isSuccess]);
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
