@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { getChangeRequestById } from "@/requests/change-requests/get-change-request-by-id";
 import { ReactElement, useEffect, useState } from "react";
-import {
-    blankChangeRequest,
-    ChangeRequestPayload,
-} from "@/components/change-requests/change-requests";
-import { ChangeRequest, determineStatusColor } from "@/components/change-requests/table/columns";
+import { determineStatusColor } from "@/components/change-requests/table/columns";
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { NavigateFunction } from "react-router-dom";
+import { ChangeRequest } from "@/models/change-requests/change-request/change-request";
+import { blankChangeRequest } from "@/models/change-requests/change-request/blank-change-request";
+import { ChangeRequestPayload } from "@/models/change-requests/change-request/change-request-payload";
 
 interface Props {
     changeRequestId: string;
@@ -125,10 +124,10 @@ export default function ChangeRequestSummary({ changeRequestId, redirect }: Prop
                             <Label htmlFor={"status"}>Status</Label>
                             <Input
                                 id={"status"}
-                                className={`${determineStatusColor(changeRequest?.status!)}`}
+                                className={`${determineStatusColor(changeRequest?.status)}`}
                                 readOnly
                                 value={
-                                    changeRequest?.status.charAt(0).toUpperCase()! +
+                                    changeRequest?.status.charAt(0).toUpperCase() +
                                     changeRequest?.status.slice(1)
                                 }
                             />
@@ -138,7 +137,7 @@ export default function ChangeRequestSummary({ changeRequestId, redirect }: Prop
                             <Input
                                 readOnly
                                 id={"createdAt"}
-                                value={formatCreatedAt(changeRequest?.createdAt!)}
+                                value={formatCreatedAt(changeRequest?.createdAt)}
                             />
                         </div>
                         <div className={"flex flex-col"}>
