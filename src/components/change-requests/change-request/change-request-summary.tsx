@@ -49,7 +49,7 @@ export default function ChangeRequestSummary({ changeRequestId, redirect }: Prop
             };
             setChangeRequest(changeRequest);
         }
-    }, [changeRequestQuery.data]);
+    }, [changeRequestQuery.data, changeRequestQuery.isSuccess]);
 
     function formatCreatedAt(createdAt: Date): string | undefined {
         if (!createdAt) return;
