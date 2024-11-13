@@ -44,7 +44,7 @@ export default function ChangeRequests(): ReactElement {
         if (changeRequestQuery.isSuccess) {
             setData(changeRequestQuery.data.data.data);
         }
-    }, [changeRequestQuery.data]);
+    }, [changeRequestQuery.data, changeRequestQuery.isSuccess]);
 
     useEffect(() => {
         if (changeRequestQuery.isSuccess && changeRequestQuery.data.data.meta) {
@@ -52,7 +52,7 @@ export default function ChangeRequests(): ReactElement {
                 Math.ceil(changeRequestQuery.data?.data.meta.total / pagination.pageSize),
             );
         }
-    }, [changeRequestQuery.isSuccess, changeRequestQuery.data?.data.meta]);
+    }, [changeRequestQuery.isSuccess, changeRequestQuery.data?.data.meta, pagination.pageSize]);
 
     useEffect(() => {
         if (changeRequestQuery.isSuccess && data) {
@@ -75,7 +75,7 @@ export default function ChangeRequests(): ReactElement {
             }
             setChangeRequests(mockArray);
         }
-    }, [data]);
+    }, [data, changeRequestQuery.isSuccess]);
 
     if (data?.length === 0) {
         return (
