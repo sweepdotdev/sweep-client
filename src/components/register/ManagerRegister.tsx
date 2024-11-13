@@ -50,7 +50,7 @@ export default function ManagerRegister(): ReactElement {
         if (loggedIn) {
             navigate("/");
         }
-    }, [loggedIn]);
+    }, [loggedIn, navigate]);
 
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
