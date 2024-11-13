@@ -22,7 +22,7 @@ export default function Home(): ReactElement {
         if (!loggedIn) {
             redirect("/login");
         }
-    }, []);
+    }, [loggedIn, redirect]);
 
     const setOAuth2Linkage = useStoreInContext((state) => state.setHasOAuth2Credentials);
 
