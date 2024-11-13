@@ -90,6 +90,7 @@ export default function ManagerRegister(): ReactElement {
             const { payload } = await verifyJWT(idToken);
 
             setState({
+                avatarUrl: "",
                 loggedIn: true,
                 firstName: payload.first_name,
                 lastName: payload.last_name,
