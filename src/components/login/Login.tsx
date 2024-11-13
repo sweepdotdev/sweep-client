@@ -64,6 +64,7 @@ export default function Login(): ReactElement {
             const { payload } = await verifyJWT(idToken);
 
             setState({
+                avatarUrl: "",
                 loggedIn: true,
                 firstName: payload.first_name as string,
                 lastName: payload.last_name as string,
