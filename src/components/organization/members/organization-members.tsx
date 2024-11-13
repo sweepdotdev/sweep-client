@@ -51,7 +51,7 @@ export default function OrganizationMembers(): ReactElement {
 
             setUsers(membersArray);
         }
-    }, [membersQuery.data]);
+    }, [membersQuery.data, membersQuery.isSuccess]);
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
@@ -68,7 +68,7 @@ export default function OrganizationMembers(): ReactElement {
                     </TableHeader>
                     <TableBody>
                         {users.map((user: User) => (
-                            <TableRow>
+                            <TableRow key={user.id}>
                                 <TableCell>{user.first_name}</TableCell>
                                 <TableCell>{user.last_name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
