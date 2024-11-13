@@ -6,20 +6,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RedirectButton from "@/components/change-requests/table/redirect-button";
-
-export type ChangeRequest = {
-    id: string;
-    packageManager: string;
-    packageManagerVersion: string;
-    command: string;
-    eligibleGitNamespaces: string[];
-    customBranchName: string;
-    customCommitMessage: string;
-    customPullRequestTitle: string;
-    dryRun: boolean;
-    status: "pending" | "in_progress" | "completed";
-    createdAt: Date;
-};
+import { ChangeRequest } from "@/models/change-requests/change-request/change-request";
 
 interface ColorDetermination {
     textColor: string;
