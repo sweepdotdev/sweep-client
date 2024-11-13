@@ -39,7 +39,7 @@ export default function CreateChangeRequests(): ReactElement {
         if (!loggedIn) {
             redirect("/login");
         }
-    }, [loggedIn]);
+    }, [loggedIn, redirect]);
 
     const form = useForm<z.infer<typeof changeRequestSchema>>({
         resolver: zodResolver(changeRequestSchema),
