@@ -43,7 +43,7 @@ export default function Login(): ReactElement {
         if (loggedIn) {
             redirect("/");
         }
-    }, [loggedIn]);
+    }, [loggedIn, redirect]);
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
