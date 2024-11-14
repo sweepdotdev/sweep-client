@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card.tsx";
 
 import { z } from "zod";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useStoreInContext } from "@/lib/zustand.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
@@ -41,6 +41,8 @@ export default function CreateChangeRequests(): ReactElement {
         }
     }, [loggedIn, redirect]);
 
+    const [disabled, setDisabled] = useState<boolean>(false);
+
     const form = useForm<z.infer<typeof changeRequestSchema>>({
         resolver: zodResolver(changeRequestSchema),
         defaultValues: {
@@ -56,6 +58,7 @@ export default function CreateChangeRequests(): ReactElement {
     });
 
     async function onSubmit(values: z.infer<typeof changeRequestSchema>): Promise<void> {
+        setDisabled(true);
         const res: AxiosResponse = await changeRequestMutation.mutateAsync({
             command: values.command,
             packageManager: values.packageManager,
@@ -68,6 +71,7 @@ export default function CreateChangeRequests(): ReactElement {
         });
 
         if (res.status === 202) {
+            setDisabled(false);
             redirect("/change-requests");
         }
     }
@@ -225,8 +229,18 @@ export default function CreateChangeRequests(): ReactElement {
                     </Form>
                 </CardContent>
                 <CardFooter>
-                    <div className={"w-full flex justify-end"}>
-                        <Button form={"changeRequest"} type={"submit"}>
+                    <div className={"w-full flex justify-end space-x-2"}>
+                        <Button
+                            disabled={disabled || changeRequestMutation.isPending}
+                            onClick={() => redirect("/")}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            disabled={disabled || changeRequestMutation.isPending}
+                            form={"changeRequest"}
+                            type={"submit"}
+                        >
                             Submit
                         </Button>
                     </div>
