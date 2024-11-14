@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useStoreInContext } from "@/lib/zustand.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { getAllChangeRequests } from "@/requests/change-requests/get-change-requests.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { DataTable } from "@/components/change-requests/table/data-table";
@@ -101,14 +101,22 @@ export default function ChangeRequests(): ReactElement {
                     <Loader className={"h-8 w-8 animate-spin"} />
                 </div>
             ) : (
-                <DataTable
-                    pagination={pagination}
-                    setPagination={setPagination}
-                    totalPages={totalPages}
-                    setTotalPages={setTotalPages}
-                    columns={columns}
-                    data={changeRequests}
-                />
+                <div>
+                    <Button
+                        onClick={() => redirect("/change-requests/create")}
+                        className={"absolute shadow-2xl bg-green-600 hover:bg-green-500"}
+                    >
+                        Create Change Request <Plus className={"h-4 w-4 ml-3"} />
+                    </Button>
+                    <DataTable
+                        pagination={pagination}
+                        setPagination={setPagination}
+                        totalPages={totalPages}
+                        setTotalPages={setTotalPages}
+                        columns={columns}
+                        data={changeRequests}
+                    />
+                </div>
             )}
         </div>
     );
