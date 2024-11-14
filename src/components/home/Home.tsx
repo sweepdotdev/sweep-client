@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useStoreInContext } from "@/lib/zustand";
 import { ProviderName } from "@/requests/integrations/oauth2/github";
 import { GitConnectionPrompt } from "@/components/home/GitConnectionPrompt";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { confirmOAuthLinkage } from "@/requests/integrations/oauth2/confirm-linkage";
 import { Loader } from "lucide-react";
@@ -53,7 +53,7 @@ export default function Home(): ReactElement {
                             <GitConnectionPrompt />
                         ) : (
                             // TODO: WRITE A HOME SUB-COMPONENT
-                            <div>Home</div>
+                            <Outlet />
                         )}
                     </div>
                 )}
