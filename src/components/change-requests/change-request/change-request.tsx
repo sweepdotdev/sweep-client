@@ -41,7 +41,7 @@ export default function ChangeRequest(): ReactElement {
     const [jobs, setJobs] = useState<Job[]>([blankJob]);
 
     useEffect(() => {
-        if (!id) redirect("/change-requests");
+        if (!id) redirect("/");
     }, [id, redirect]);
 
     useEffect(() => {
