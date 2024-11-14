@@ -153,7 +153,7 @@ export default function ChangeRequestSummary({ changeRequestId, redirect }: Prop
                     </CardContent>
                     <CardFooter>
                         <div className={"w-full flex justify-end"}>
-                            <Button onClick={() => redirect("/change-requests")}>Back</Button>
+                            <Button onClick={() => redirect("/")}>Back</Button>
                         </div>
                     </CardFooter>
                 </Card>
