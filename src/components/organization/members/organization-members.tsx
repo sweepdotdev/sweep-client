@@ -7,7 +7,6 @@ import { AxiosResponse } from "axios";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -55,9 +54,8 @@ export default function OrganizationMembers(): ReactElement {
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
-            <div className={"overflow-y-scroll"}>
-                <Table className={"w-[800px]"}>
-                    <TableCaption>All members associated with the organization.</TableCaption>
+            <div className={"overflow-y-scroll shadow-2xl max-h-2/3 w-2/3"}>
+                <Table className={" h-full border overflow-y-scroll"}>
                     <TableHeader>
                         <TableRow>
                             <TableHead>First Name</TableHead>
