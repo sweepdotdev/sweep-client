@@ -54,8 +54,8 @@ export default function OrganizationMembers(): ReactElement {
 
     return (
         <div className={"h-full w-full flex items-center justify-center"}>
-            <div className={"overflow-y-scroll shadow-2xl max-h-2/3 w-2/3"}>
-                <Table className={" h-full border overflow-y-scroll"}>
+            <div className={"overflow-y-scroll shadow-2xl max-h-2/3 w-full sm:w-4/5 md:w-3/5"}>
+                <Table className={"h-full border overflow-y-scroll"}>
                     <TableHeader>
                         <TableRow>
                             <TableHead>First Name</TableHead>
