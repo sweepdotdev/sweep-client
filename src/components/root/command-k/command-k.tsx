@@ -34,7 +34,7 @@ export default function CommandK(): ReactElement {
             }
 
             if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
-                redirect("/change-requests");
+                redirect("/");
             }
 
             if (e.key === "=" && (e.metaKey || e.ctrlKey)) {
