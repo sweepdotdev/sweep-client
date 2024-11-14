@@ -21,6 +21,20 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
+                children: [
+                    {
+                        path: "/",
+                        element: <ChangeRequests />,
+                    },
+                    {
+                        path: "/change-requests/create",
+                        element: <CreateChangeRequests />,
+                    },
+                    {
+                        path: "/change-requests/:id",
+                        element: <ChangeRequest />,
+                    },
+                ],
             },
             {
                 path: "/login",
@@ -41,18 +55,6 @@ export const router = createBrowserRouter([
             {
                 path: "/user-info",
                 element: <UserInfo />,
-            },
-            {
-                path: "/change-requests",
-                element: <ChangeRequests />,
-            },
-            {
-                path: "/change-requests/create",
-                element: <CreateChangeRequests />,
-            },
-            {
-                path: "/change-requests/:id",
-                element: <ChangeRequest />,
             },
             {
                 path: "/billing",
