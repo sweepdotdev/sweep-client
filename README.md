@@ -13,3 +13,4 @@
     1. Ensure that you copy this value into the `.env` of the client.
 5. Run `./main.py` in the directory of the server.
 6. Run `pnpm run dev` in the directory of the client.
+7. Open in browser.
