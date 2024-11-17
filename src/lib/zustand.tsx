@@ -1,30 +1,8 @@
 import { Context, createContext, MutableRefObject, ReactNode, useContext, useRef } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-export interface SessionState {
-    loggedIn: boolean;
-    expires: Date | null;
-    firstName: string;
-    lastName: string;
-    email: string;
-    organization: string;
-    stripeClientSecret?: string;
-    hasOAuth2Credentials?: boolean;
-    avatarUrl: string;
-    sub: string;
-    iss: string;
-}
-
-export interface SessionActions {
-    setExpiry: (value: Date) => void;
-    clearState: () => void;
-    getState: () => SessionState;
-    setState: (val: SessionState) => void;
-    setHasOAuth2Credentials: () => void;
-    setClientSecret: (clientSecret: string) => void;
-    setAvatarUrl: (avatarUrl: string) => void;
-}
+import { SessionState } from "@/models/zustand/session-state";
+import { SessionActions } from "@/models/zustand/session-actions";
 
 const StoreContext: Context<StoreApi<SessionState & SessionActions> | null> =
     createContext<StoreApi<SessionState & SessionActions> | null>(null);
