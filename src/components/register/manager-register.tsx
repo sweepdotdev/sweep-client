@@ -29,7 +29,7 @@ import { SessionActions, SessionState, useStoreInContext } from "@/lib/zustand.t
 import { verifyJWT } from "@/lib/security.ts";
 import { UseMutationResult } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast.ts";
-import { StatePayload } from "./UserRegister.tsx";
+import { StatePayload } from "./user-register.tsx";
 import useRegisterUser, { RegisterData } from "@/requests/register/use-register.tsx";
 import Cookies from "js-cookie";
 
