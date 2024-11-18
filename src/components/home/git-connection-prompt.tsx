@@ -1,5 +1,5 @@
 import { generateCSRFToken } from "@/lib/security";
-import { LoginWithGithubButton } from "@/components/home/LoginWithGithubButton";
+import { LoginWithGithubButton } from "@/components/home/login-with-github-button";
 
 export const GitConnectionPrompt = () => {
     const csrfToken = generateCSRFToken();
