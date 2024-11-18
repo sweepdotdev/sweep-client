@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useStoreInContext } from "@/lib/zustand";
 import { ProviderName } from "@/requests/integrations/oauth2/github";
-import { GitConnectionPrompt } from "@/components/home/GitConnectionPrompt";
+import { GitConnectionPrompt } from "@/components/home/git-connection-prompt";
 import { NavigateFunction, Outlet, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { confirmOAuthLinkage } from "@/requests/integrations/oauth2/confirm-linkage";
