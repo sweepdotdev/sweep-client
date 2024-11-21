@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/form";
 import useUploadAvatar from "@/requests/user/use-upload-avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import getUserAvatarUrl from "@/requests/user/get-avatar-url";
 
 interface InviteCode {
     id: string;
@@ -42,15 +43,25 @@ interface InviteCode {
 }
 
 export default function UserInfo(): ReactElement {
-    const { organization, email, lastName, firstName, loggedIn, avatarUrl } = useStoreInContext(
-        (state) => state.getState(),
-    );
+    const { sub, organization, email, lastName, firstName, loggedIn, avatarUrl } =
+        useStoreInContext((state) => state.getState());
     const setAvatarUrl = useStoreInContext((state) => state.setAvatarUrl);
     const redirect: NavigateFunction = useNavigate();
 
     useEffect(() => {
         if (!loggedIn) redirect("/login");
     }, [loggedIn, redirect]);
+
+    if (!avatarUrl) {
+        const getAvatarQuery = useQuery({
+            queryKey: ["get-avatar", sub],
+            queryFn: async (): Promise<AxiosResponse> => await getUserAvatarUrl(),
+        });
+
+        if (getAvatarQuery.isSuccess) {
+            setAvatarUrl(getAvatarQuery.data.data.data.avatar_url);
+        }
+    }
 
     const form = useForm<z.infer<typeof UploadPictureSchema>>({
         resolver: zodResolver(UploadPictureSchema),
