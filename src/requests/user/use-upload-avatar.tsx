@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { uploadAvatar, UploadPayload } from "@/requests/user/upload-profile-picture";
+import { uploadAvatar, UploadPayload } from "@/requests/user/upload-avatar";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosResponse } from "axios";
 
