@@ -27,6 +27,7 @@ export default function GithubCallbackPage(): ReactElement {
                     variant: "destructive",
                 });
             }
+
             redirect("/");
         })();
     }, [searchParams]);
