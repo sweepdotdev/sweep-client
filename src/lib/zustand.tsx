@@ -28,7 +28,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
                     setState: (val: SessionState) =>
                         set((state: SessionState) => Object.assign(state, val)),
                     setExpiry: (value: Date) => set(() => ({ expires: value })),
-                    setHasOAuth2Credentials: () => set(() => ({ hasOAuth2Credentials: true })),
+                    setHasOAuth2Credentials: (has: boolean) =>
+                        set(() => ({ hasOAuth2Credentials: has })),
                     clearState: () =>
                         set(() => ({
                             loggedIn: false,
