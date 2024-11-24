@@ -29,13 +29,18 @@ export default function Home(): ReactElement {
     const OAuthQuery = useQuery({
         queryKey: ["confirm-linkage"],
         queryFn: async () => await confirmOAuthLinkage(),
+        retry: false,
+        staleTime: Infinity,
     });
 
     useEffect(() => {
-        if (OAuthQuery.data?.status === 201) {
-            setOAuth2Linkage();
+        if (OAuthQuery.error) {
+            setOAuth2Linkage(false);
         }
-    }, [OAuthQuery.data, setOAuth2Linkage]);
+        if (OAuthQuery.data?.status === 201) {
+            setOAuth2Linkage(true);
+        }
+    }, [OAuthQuery, setOAuth2Linkage]);
 
     useEffect(() => {
         const exists: boolean = providers.some((p) => ACCEPTED_GIT_PROVIDERS.has(p));
@@ -52,7 +57,6 @@ export default function Home(): ReactElement {
                         {!hasAssociatedGit && !hasOAuth2Linkage ? (
                             <GitConnectionPrompt />
                         ) : (
-                            // TODO: WRITE A HOME SUB-COMPONENT
                             <Outlet />
                         )}
                     </div>
