@@ -42,7 +42,7 @@ interface InviteCode {
     created_at: string;
 }
 
-export default function UserInfo(): ReactElement {
+export default function UserInformation(): ReactElement {
     const { sub, organization, email, lastName, firstName, loggedIn, avatarUrl } =
         useStoreInContext((state) => state.getState());
     const setAvatarUrl = useStoreInContext((state) => state.setAvatarUrl);
@@ -52,16 +52,18 @@ export default function UserInfo(): ReactElement {
         if (!loggedIn) redirect("/login");
     }, [loggedIn, redirect]);
 
-    if (!avatarUrl) {
-        const getAvatarQuery = useQuery({
-            queryKey: ["get-avatar", sub],
-            queryFn: async (): Promise<AxiosResponse> => await getUserAvatarUrl(),
-        });
+    const getAvatarQuery = useQuery({
+        queryKey: ["get-avatar", sub],
+        queryFn: async (): Promise<AxiosResponse> => await getUserAvatarUrl(),
+        retry: false,
+        staleTime: Infinity,
+    });
 
+    useEffect(() => {
         if (getAvatarQuery.isSuccess) {
             setAvatarUrl(getAvatarQuery.data.data.data.avatar_url);
         }
-    }
+    }, [avatarUrl, getAvatarQuery.data]);
 
     const form = useForm<z.infer<typeof UploadPictureSchema>>({
         resolver: zodResolver(UploadPictureSchema),
