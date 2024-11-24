@@ -3,7 +3,7 @@ import Login from "@/components/login/login.tsx";
 import Root from "@/components/root.tsx";
 import ManagerRegister from "@/components/register/manager-register.tsx";
 import UserRegister from "@/components/register/user-register.tsx";
-import UserInfo from "@/components/user-information/user-info.tsx";
+import UserInformation from "@/components/user-information/user-information.tsx";
 import Home from "@/components/home/home.tsx";
 import GithubCallbackPage from "@/components/callbacks/github-callback-page.tsx";
 import ChangeRequests from "@/components/change-requests/change-requests.tsx";
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/user-info",
-                element: <UserInfo />,
+                element: <UserInformation />,
             },
             {
                 path: "/billing",
